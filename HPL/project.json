@@ -15,6 +15,7 @@
   "studioVersion": "19.2.0.0",
   "projectVersion": "1.0.0",
   "runtimeOptions": {
+    "exceptionHandlerWorkflow": "HPLHandler.xaml",
     "autoDispose": false,
     "isPausable": true,
     "excludedLoggedData": [
