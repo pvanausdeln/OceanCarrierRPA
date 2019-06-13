@@ -14,6 +14,7 @@
   "studioVersion": "18.3.2.0",
   "projectVersion": "1.0.0.0",
   "runtimeOptions": {
+    "exceptionHandlerWorkflow": "OOCLHandler.xaml",
     "autoDispose": false,
     "isPausable": true,
     "excludedLoggedData": [
