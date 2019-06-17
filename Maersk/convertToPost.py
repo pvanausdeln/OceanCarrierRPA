@@ -73,7 +73,7 @@ class baseInfo:
     "workOrderNumber": None
     }
 
-    StatusMapHPL = {
+    StatusMapMaersk = {
         "Gate out empty": "OA",
         "Gate in empty": "I",
         "Vessel departed": "VD",
@@ -82,7 +82,7 @@ class baseInfo:
         "Discharged": "UV"
     }
 
-def HPLCodeToName(code):
+def MaerskCodeToName(code):
     if(code == "AE"):
         return "Loaded on Vessel"
     elif(code == "VD"):
@@ -97,15 +97,15 @@ def HPLCodeToName(code):
         return "INGATE"
     return None
 
-def HPLEventTranslate(event):
-    for key, value in baseInfo.StatusMapHPL.items():
+def MaerskEventTranslate(event):
+    for key, value in baseInfo.StatusMapMaersk.items():
         if(event.find(key) != -1):
-            return value, HPLCodeToName(value)
+            return value, MaerskCodeToName(value)
     return (None, None)
     
 
 
-def HPLPost(container, path):
+def MaerskPost(container, path):
     if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
         with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
             reader = csv.reader(containerInfo)
@@ -122,8 +122,8 @@ def HPLPost(container, path):
                 postJson["voyageNumber"] = row[12]
                 postJson["workOrderNumber"] = row[14]
                 postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = HPLEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "HPL RPA"
+                postJson["eventCode"], postJson["eventName"] = MaerskEventTranslate(row[0])
+                postJson["resolvedEventSource"] = "Maersk RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
                 print(json.dumps(postJson))
@@ -139,7 +139,7 @@ def main(containerList, cwd):
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        HPLPost(container, path)
+        MaerskPost(container, path)
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
