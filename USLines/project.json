@@ -9,7 +9,7 @@
     "UiPath.Python.Activities": "[1.1.6863.33404]",
     "UiPath.System.Activities": "[19.6.0]",
     "UiPath.UIAutomation.Activities": "[19.6.0]",
-    "UiPath.WebAPI.Activities": "[1.4.1]"
+    "UiPath.WebAPI.Activities": "[1.4.2]"
   },
   "schemaVersion": "3.2",
   "studioVersion": "19.2.0.0",

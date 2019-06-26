@@ -3,12 +3,12 @@
   "description": "OOCL Site RPA",
   "main": "Main.xaml",
   "dependencies": {
-    "UiPath.Excel.Activities": "[2.6.1]",
+    "UiPath.Excel.Activities": "[2.6.2]",
     "UiPath.Mail.Activities": "[1.5.0]",
     "UiPath.Python.Activities": "[1.1.6863.33404]",
-    "UiPath.System.Activities": "[19.5.0]",
-    "UiPath.UIAutomation.Activities": "[19.5.0]",
-    "UiPath.WebAPI.Activities": "[1.4.1]"
+    "UiPath.System.Activities": "[19.6.0]",
+    "UiPath.UIAutomation.Activities": "[19.6.0]",
+    "UiPath.WebAPI.Activities": "[1.4.2]"
   },
   "schemaVersion": "3.2",
   "studioVersion": "18.3.2.0",
@@ -23,6 +23,7 @@
     ]
   },
   "projectType": "Workflow",
+  "expressionLanguage": "VisualBasic",
   "libraryOptions": {
     "includeOriginalXaml": false,
     "privateWorkflows": []
