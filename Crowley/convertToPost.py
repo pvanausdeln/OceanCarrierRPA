@@ -82,64 +82,73 @@ class baseInfo:
         "Discharged": "UV"
     }
 
-def CrowleyCodeToName(code):
-    if(code == "AE"):
-        return "Loaded on Vessel"
-    elif(code == "VD"):
-        return "Vessel Departure"
-    elif(code == "VA"):
-        return "Vessel Arrival"
-    elif(code == "UV"):
-        return "Unloaded From Vessel"
-    elif(code == "OA"):
-        return "OUTGATE"
-    elif(code == "I"):
-        return "INGATE"
-    return None
-
 def CrowleyEventTranslate(event):
-    for key, value in baseInfo.StatusMapCrowley.items():
-        if(event.find(key) != -1):
-            return value, CrowleyCodeToName(value)
+    if(event.find("Departed Empty") != -1 or event.find("Equipment Assigned") != -1):
+        return ("Empty Equipment Dispatched", "EE")
+    elif(event.find("Received ") != -1):
+        return ("Cargo Received", "CO")
+    elif(event.find("Loaded onto Vessel") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("Vessel has Sailed") != -1):
+        return ("Vessel Departure", "VD")
+    elif(event.find("Available for pickup") != -1):
+        return ("Cargo Available", "CA")
+    elif(event.find("Dispatched") != -1):
+        return ("Outgate Load", "OL")
+    elif(event.find("Confirmed ") != -1): # placeholder
+        return (None, None)
     return (None, None)
     
 
 
-def CrowleyPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader) # skip first row
-            for row in reader:
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
-                    continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = CrowleyEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "Crowley RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+def CrowleyPost(step):
+    with open(step) as jsonData:
+        data = json.load(jsonData)
+    postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+    postJson["unitId"] = data.get("ContainerID")
+    postJson["location"] = data.get("Event").split("at")[-1].strip()
+    postJson["city"] = postJson["location"].split(",")[0]
+    postJson["eventTime"] = datetime.datetime.strptime(data.get("Datetime"), '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+
+    postJson["vessel"] = "PARADERO"#data.get("Vessel")
+    postJson["voyageNumber"] = "023N"#data.get("Voyage")
+    postJson["workOrderNumber"] = data.get("WONumber")
+    postJson["billOfLadingNumber"] = data.get("BOLNumber")
+
+    postJson["eventName"], postJson["eventCode"] = CrowleyEventTranslate(data.get("Event"))
+    postJson["resolvedEventSource"] = "Crowley RPA"
+    postJson["codeType"] = "UNLOCODE"
+    postJson["reportSource"] = "OceanEvent"
+    print(json.dumps(postJson))
+    if(postJson["eventCode"] == None):
+        return
+    headers = {'content-type':'application/json'}
+    r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+    print(r)
     return
+
+def testMain(container): #test main
+    fileList = glob.glob(os.getcwd() + "\\ContainerInformation\\"+container+"Step*.json", recursive = True) #get all the json steps
+    if (not fileList):
+        return
+    fileList = [f for f in fileList if container in f] #set of steps for this number
+    fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+    for step in fileList:
+        CrowleyPost(step)
 
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        CrowleyPost(container, path)
+        fileList = glob.glob(r""+path+"ContainerInformation\\"+container+'Step*.json', recursive = True) #get all the json steps
+        if (not fileList):
+            continue
+        fileList = [f for f in fileList if container in f] #set of steps for this number
+        fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+        for step in fileList:
+            CrowleyPost(step)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    testMain(sys.argv[1])
+    #main(sys.argv[1], sys.argv[2])
