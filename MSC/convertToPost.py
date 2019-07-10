@@ -82,64 +82,82 @@ class baseInfo:
         "Discharged": "UV"
     }
 
-def MSCCodeToName(code):
-    if(code == "AE"):
-        return "Loaded on Vessel"
-    elif(code == "VD"):
-        return "Vessel Departure"
-    elif(code == "VA"):
-        return "Vessel Arrival"
-    elif(code == "UV"):
-        return "Unloaded From Vessel"
-    elif(code == "OA"):
-        return "OUTGATE"
-    elif(code == "I"):
-        return "INGATE"
-    return None
-
 def MSCEventTranslate(event):
-    for key, value in baseInfo.StatusMapMSC.items():
-        if(event.find(key) != -1):
-            return value, MSCCodeToName(value)
+    if(event.find("Loaded") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("Carrier Release") != -1):
+        return ("Carrier Release", "CR")
+    elif(event.find("Customs Release") != -1):
+        return ("Customs Release", "CT")
+    elif(event.find("Dishcarged") != -1):
+        return ("Unloaded from Vessel", "UV")
+    elif(event.find("Gate out Full") != -1):
+        return ("Outgate Load", "OL")
+    elif(event.find("Empty to Shipper") != -1):
+        return ("Enpty Equipment Dispatched", "EE")
+    elif(event.find("Gate in Full") != -1):
+        return ("Ingate Load", "I")
+    elif(event.find("Transshipment Discharged") != -1):
+        return ("Unloaded from Vessel", "UV")
+    elif(event.find("Transshipment Loaded") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("Loaded on Rail") != -1):
+        return ("LOADED_RAIL", "AL")
+    elif(event.find("Rail departed Origin") != -1):
+        return ("RAIL_DEPARTURE", "RL")
+    elif(event.find("Arrived at rail ramp") != -1):
+        return ("RAIL_ARRIVAL", "AR")
+    elif(event.find("Unloaded from Rail") != -1):
+        return ("UNLOADED_FROM_RAIL", "UR")
     return (None, None)
     
+def MSCPost(step):
+    with open(step) as jsonData:
+        data = json.load(jsonData)
+    postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+    postJson["unitId"] = data.get("ContainerID")
+    postJson["location"] = data.get("Location")
+    postJson["eventTime"] = datetime.datetime.strptime(data.get("Date"), '%d/%m/%Y').strftime('%m-%d-%Y') + " 00:00:00"
 
+    postJson["vessel"] = data.get("Vessel")
+    postJson["voyageNumber"] = data.get("Voyage")
+    #postJson["workOrderNumber"] = data.get("WONumber")
+    #postJson["billOfLadingNumber"] = data.get("BOLNumber")
 
-def MSCPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader) # skip first row
-            for row in reader:
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
-                    continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = MSCEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "MSC RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+    postJson["eventName"], postJson["eventCode"] = MSCEventTranslate(data.get("Description"))
+    postJson["resolvedEventSource"] = "MSC RPA"
+    postJson["codeType"] = "UNLOCODE"
+    postJson["reportSource"] = "OceanEvent"
+    print(json.dumps(postJson))
+    if(postJson["eventCode"] == None):
+        return
+    headers = {'content-type':'application/json'}
+    r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+    print(json.dumps(postJson))
     return
+
+def testMain(container): #test main
+    fileList = glob.glob(os.getcwd() + "\\ContainerInformation\\"+container+"Step*.json", recursive = True) #get all the json steps
+    if (not fileList):
+        return
+    fileList = [f for f in fileList if container in f] #set of steps for this number
+    fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+    for step in fileList:
+        MSCPost(step)
 
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        MSCPost(container, path)
+        fileList = glob.glob(r""+path+"ContainerInformation\\"+container+'Step*.json', recursive = True) #get all the json steps
+        if (not fileList):
+            continue
+        fileList = [f for f in fileList if container in f] #set of steps for this number
+        fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+        for step in fileList:
+            MSCPost(step)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    testMain(sys.argv[1])
+    #main(sys.argv[1], sys.argv[2])
