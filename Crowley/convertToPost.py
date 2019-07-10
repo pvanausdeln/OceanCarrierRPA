@@ -150,5 +150,5 @@ def main(containerList, cwd):
             CrowleyPost(step)
 
 if __name__ == "__main__":
-    testMain(sys.argv[1])
-    #main(sys.argv[1], sys.argv[2])
+    #testMain(sys.argv[1])
+    main(sys.argv[1], sys.argv[2])
