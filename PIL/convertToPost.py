@@ -82,64 +82,68 @@ class baseInfo:
         "Discharged": "UV"
     }
 
-def PILCodeToName(code):
-    if(code == "AE"):
-        return "Loaded on Vessel"
-    elif(code == "VD"):
-        return "Vessel Departure"
-    elif(code == "VA"):
-        return "Vessel Arrival"
-    elif(code == "UV"):
-        return "Unloaded From Vessel"
-    elif(code == "OA"):
-        return "OUTGATE"
-    elif(code == "I"):
-        return "INGATE"
-    return None
-
 def PILEventTranslate(event):
-    for key, value in baseInfo.StatusMapPIL.items():
-        if(event.find(key) != -1):
-            return value, PILCodeToName(value)
+    if(event.find("O/B Empty Container Released") != -1):
+        return ("Empty Equipment Dispatched", "EE")
+    elif(event.find("Truck Gate In to O/B Terminal") != -1):
+        return ("Ingate Empty", "IE")
+    elif(event.find("Vessel Loading") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("Vessel Discharge") != -1):
+        return ("Unloaded from Vessel", "UV")
+    elif(event.find("Truck Gate Out from I/B Terminal") != -1):
+        return ("Outgate Empty", "OA")
+    elif(event.find("I/B Empty Container Returned") != -1):
+        return ("Return Container", "RD")
     return (None, None)
     
+def PILPost(step):
+    with open(step) as jsonData:
+        data = json.load(jsonData)
+    postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+    postJson["unitId"] = data.get("ContainerID")
+    postJson["location"] = data.get("Location")
+    postJson["eventTime"] = datetime.datetime.strptime(data.get("Datetime").replace("* ",""), '%Y-%m-%d %H:%M:%S').strftime('%m-%d-%Y %H:%M:%S')
 
+    postJson["vessel"] = data.get("Vessel/Voyage").split("/")[0]
+    postJson["voyageNumber"] = data.get("Vessel/Voyage").split("/")[1]
+    #postJson["workOrderNumber"] = data.get("WONumber")
+    #postJson["billOfLadingNumber"] = data.get("BOLNumber")
 
-def PILPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader) # skip first row
-            for row in reader:
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
-                    continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = PILEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "PIL RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+    postJson["eventName"], postJson["eventCode"] = PILEventTranslate(data.get("Event"))
+    postJson["resolvedEventSource"] = "PIL RPA"
+    postJson["codeType"] = "UNLOCODE"
+    postJson["reportSource"] = "OceanEvent"
+    print(json.dumps(postJson))
+    if(postJson["eventCode"] == None):
+        return
+    headers = {'content-type':'application/json'}
+    r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+    print(json.dumps(postJson))
     return
+
+def testMain(container): #test main
+    fileList = glob.glob(os.getcwd() + "\\ContainerInformation\\"+container+"Step*.json", recursive = True) #get all the json steps
+    if (not fileList):
+        return
+    fileList = [f for f in fileList if container in f] #set of steps for this number
+    fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+    for step in fileList:
+        PILPost(step)
 
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        PILPost(container, path)
+        fileList = glob.glob(r""+path+"ContainerInformation\\"+container+'Step*.json', recursive = True) #get all the json steps
+        if (not fileList):
+            continue
+        fileList = [f for f in fileList if container in f] #set of steps for this number
+        fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+        for step in fileList:
+            PILPost(step)
 
 if __name__ == "__main__":
+    #testMain(sys.argv[1])
     main(sys.argv[1], sys.argv[2])
