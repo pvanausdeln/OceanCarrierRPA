@@ -73,73 +73,64 @@ class baseInfo:
     "workOrderNumber": None
     }
 
-    StatusMapMatson = {
-        "Gate out empty": "OA",
-        "Gate in empty": "I",
-        "Vessel departed": "VD",
-        "Vessel arrived": "VA",
-        "Loaded": "AE",
-        "Discharged": "UV"
-    }
-
-def MatsonCodeToName(code):
-    if(code == "AE"):
-        return "Loaded on Vessel"
-    elif(code == "VD"):
-        return "Vessel Departure"
-    elif(code == "VA"):
-        return "Vessel Arrival"
-    elif(code == "UV"):
-        return "Unloaded From Vessel"
-    elif(code == "OA"):
-        return "OUTGATE"
-    elif(code == "I"):
-        return "INGATE"
-    return None
-
 def MatsonEventTranslate(event):
-    for key, value in baseInfo.StatusMapMatson.items():
-        if(event.find(key) != -1):
-            return value, MatsonCodeToName(value)
+    if(event.find("INGATE") != -1):
+        return ("Ingate Load", "I")
+    elif(event.find("LOAD TO VESSEL") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("AVAILABLE") != -1):
+        return ("Cargo Available", "CA")
+    elif(event.find("DISCHARGE FROM VESSEL") != -1):
+        return ("Unloaded from Vessel", "UV")
     return (None, None)
     
+def MatsonPost(step):
+    with open(step) as jsonData:
+        data = json.load(jsonData)
+    postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+    postJson["unitId"] = data.get("ContainerID")
+    postJson["location"] = data.get("LOCATION")
+    postJson["eventTime"] = datetime.datetime.strptime(data.get("DATE & TIME"), '%m/%d/%y %H:%M %p').strftime('%m-%d-%Y %H:%M') + ":00"
 
+    postJson["vessel"] = data.get("Vessel")
+    postJson["voyageNumber"] = data.get("Voyage")
+    #postJson["workOrderNumber"] = data.get("WONumber")
+    #postJson["billOfLadingNumber"] = data.get("BOLNumber")
 
-def MatsonPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader) # skip first row
-            for row in reader:
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
-                    continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = MatsonEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "Matson RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+    postJson["eventName"], postJson["eventCode"] = MatsonEventTranslate(data.get("STATUS"))
+    postJson["resolvedEventSource"] = "Matson RPA"
+    postJson["codeType"] = "UNLOCODE"
+    postJson["reportSource"] = "OceanEvent"
+    print(json.dumps(postJson))
+    if(postJson["eventCode"] == None):
+        return
+    headers = {'content-type':'application/json'}
+    r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+    print(json.dumps(postJson))
     return
+
+def testMain(container): #test main
+    fileList = glob.glob(os.getcwd() + "\\ContainerInformation\\"+container+"Step*.json", recursive = True) #get all the json steps
+    if (not fileList):
+        return
+    fileList = [f for f in fileList if container in f] #set of steps for this number
+    fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+    for step in fileList:
+        MatsonPost(step)
 
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        MatsonPost(container, path)
+        fileList = glob.glob(r""+path+"ContainerInformation\\"+container+'Step*.json', recursive = True) #get all the json steps
+        if (not fileList):
+            continue
+        fileList = [f for f in fileList if container in f] #set of steps for this number
+        fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+        for step in fileList:
+            MatsonPost(step)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    testMain(sys.argv[1])
+    #main(sys.argv[1], sys.argv[2])
