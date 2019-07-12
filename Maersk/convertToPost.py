@@ -82,25 +82,21 @@ class baseInfo:
         "Discharged": "UV"
     }
 
-def MaerskCodeToName(code):
-    if(code == "AE"):
-        return "Loaded on Vessel"
-    elif(code == "VD"):
-        return "Vessel Departure"
-    elif(code == "VA"):
-        return "Vessel Arrival"
-    elif(code == "UV"):
-        return "Unloaded From Vessel"
-    elif(code == "OA"):
-        return "OUTGATE"
-    elif(code == "I"):
-        return "INGATE"
-    return None
-
 def MaerskEventTranslate(event):
-    for key, value in baseInfo.StatusMapMaersk.items():
-        if(event.find(key) != -1):
-            return value, MaerskCodeToName(value)
+    if(event.find("Gate in") != -1):
+        return ("Ingate Load", "I")
+    elif(event.find("Load on") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("Discharge") != -1):
+        return ("Unloaded from Vessel", "UV")
+    elif(event.find("Gate out Empty") != -1):
+        return ("Empty Equipment Dispatched", "EE")
+    elif(event.find("On rail") != -1):
+        return ("LOADED_ON_RAIL", "AL")
+    elif(event.find("Off rail") != -1):
+        return ("UNLOADED_FROM_RAIL", "UR")
+    elif(event.find("Gate out Load") != -1):
+        return ("Outgate Load", "OL")
     return (None, None)
     
 
@@ -113,16 +109,14 @@ def MaerskPost(container, path):
             for row in reader:
                 postJson = copy.deepcopy(baseInfo.shipmentEventBase)
                 postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
+                postJson["location"] = row[0]
+                try:
+                    postJson["eventTime"] = datetime.datetime.strptime(row[1].replace('\n', ' '), '%d %b %Y %H:%M').strftime('%m-%d-%Y %H:%M')+":00"
+                except:
                     continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = MaerskEventTranslate(row[0])
+                postJson["vessel"] = row[4]
+                postJson["voyageNumber"] = row[5]
+                postJson["eventName"], postJson["eventCode"] = MaerskEventTranslate(row[2])
                 postJson["resolvedEventSource"] = "Maersk RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
@@ -134,6 +128,12 @@ def MaerskPost(container, path):
                 print(r)
     return
 
+def testMain(container): #test main
+    path=""
+    for x in os.getcwd().split("\\"):
+        path+=x+"\\\\"
+    MaerskPost(container, path)
+
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
@@ -142,4 +142,5 @@ def main(containerList, cwd):
         MaerskPost(container, path)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    testMain(sys.argv[1])
+    #main(sys.argv[1], sys.argv[2])
