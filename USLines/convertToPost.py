@@ -73,21 +73,21 @@ class baseInfo:
     "workOrderNumber": None
     }
 
-    StatusMapUSLines  = {
-        "Empty to shipper": ("CD", "Received at Origin"),
-        "Loaded on board": ("AE", "Loaded on Vessel"),
-        "Full Load on rail for import": ("AL", "Loaded on Rail"),
-        "Discharged in transhipment": ("UE", "Unloaded from Vessel"),
-        "Train arrival for import": ("AR", "Rail Arrival at Destination Intermodal Ramp"),
-        "Import unload full from rail": ("UR", "Unloaded from a Rail Car"),
-        "Container to cosignee": ("X1", "Arrived at Delivery Location")
-    }
-
-
 def USLinesEventTranslate(event):
-    for key, value in baseInfo.StatusMapUSLines.items():
-        if(event.find(key) != -1):
-            return value
+    if(event.find("Empty in depot") != -1):
+        return ("Return Container", "RD")
+    elif(event.find("Container to consignee") != -1):
+        return ("Loaded on Vessel", "X1")
+    elif(event.find("Discharged") != -1):
+        return ("Cargo Available", "UV")
+    elif(event.find("Loaded on board") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("Discharged in transhipment") != -1):
+        return ("Unloaded from Vessel", "UV")
+    elif(event.find("Ready to be loaded") != -1):
+        return ("Prepared for Loading", "PRE")
+    elif(event.find("Empty to shipper") != -1):
+        return ("Empty Equipment Dispatched", "EE")
     return (None, None)
     
 
@@ -107,8 +107,7 @@ def USLinesPost(container, path):
                 postJson["voyageNumber"] = row[5]
                 postJson["workOrderNumber"] = row[6]
                 postJson["billOfLadingNumber"] = row[7]
-                postJson["unitType"] = row[8]
-                postJson["eventCode"], postJson["eventName"] = USLinesEventTranslate(row[2])
+                postJson["eventName"], postJson["eventCode"] = USLinesEventTranslate(row[2])
                 postJson["resolvedEventSource"] = "USLines RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
@@ -120,6 +119,12 @@ def USLinesPost(container, path):
                 print(r)
     return
 
+def testMain(container): #test main
+    path=""
+    for x in os.getcwd().split("\\"):
+        path+=x+"\\\\"
+    USLinesPost(container, path)
+
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
@@ -128,4 +133,5 @@ def main(containerList, cwd):
         USLinesPost(container, path)
 
 if __name__ == "__main__":
-    main(sys.argv[1], sys.argv[2])
+    testMain(sys.argv[1])
+    #main(sys.argv[1], sys.argv[2])
