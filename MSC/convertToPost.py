@@ -73,15 +73,6 @@ class baseInfo:
     "workOrderNumber": None
     }
 
-    StatusMapMSC = {
-        "Gate out empty": "OA",
-        "Gate in empty": "I",
-        "Vessel departed": "VD",
-        "Vessel arrived": "VA",
-        "Loaded": "AE",
-        "Discharged": "UV"
-    }
-
 def MSCEventTranslate(event):
     if(event.find("Loaded") != -1):
         return ("Loaded on Vessel", "AE")
