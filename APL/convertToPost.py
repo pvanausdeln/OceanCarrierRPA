@@ -73,22 +73,31 @@ class baseInfo:
     "workOrderNumber": None
     }
 
-    StatusMapAPL  = {
-        "Empty to shipper": ("CD", "Received at Origin"),
-        "Loaded on board": ("AE", "Loaded on Vessel"),
-        "Full Load on rail for import": ("AL", "Loaded on Rail"),
-        "Discharged in transhipment": ("UE", "Unloaded from Vessel"),
-        "Train arrival for import": ("AR", "Rail Arrival at Destination Intermodal Ramp"),
-        "Import unload full from rail": ("UR", "Unloaded from a Rail Car"),
-        "Container to cosignee": ("X1", "Arrived at Delivery Location")
-    }
-
-
 def APLEventTranslate(event):
-    for key, value in baseInfo.StatusMapAPL.items():
-        if(event.find(key) != -1):
-            return value
-    return (None, None)
+    if(event.find("Loaded") != -1 or event.find("Transshipment Loaded") != -1):
+        return ("Loaded on Vessel", "AE")
+    elif(event.find("Carrier Release") != -1):
+        return ("Carrier Release", "CR")
+    elif(event.find("Customs Release") != -1):
+        return ("Customs Release", "CT")
+    elif(event.find("Transshipment Discharged") != -1):
+        return ("Unloaded from Vessel", "UV")
+    elif(event.find("Gate Out Full") != -1):
+        return ("Outgate Load", "OL")
+    elif(event.find("Empty to Shipper") != -1):
+        return ("Empty Equipment Dispatched", "EE")
+    elif(event.find("Empty in Container Yard") != -1):
+        return ("Return Container", "RD")
+    elif(event.find("Gate In Full") != -1):
+        return ("Ingate Load", "I")
+    elif(event.find("Loaded on Rail") != -1):
+        return ("LOADED_ON_RAIL", "AL")
+    elif(event.find("Rail departed Origin") != -1):
+        return ("RAIL_DEPARTURE", "RL")
+    elif(event.find("Arrived at rail ramp") != -1):
+        return ("RAIL_ARRIVAL", "AR")
+    elif(event.find("Unloaded from Rail") != -1):
+        return ("UNLOADED_FROM_RAIL", "UR")
     
 
 
@@ -120,6 +129,15 @@ def APLPost(container, path):
                 print(r)
     return
 
+def testMain(container): #test main
+    fileList = glob.glob(os.getcwd() + "\\ContainerInformation\\"+container+".csv", recursive = True) #get all the json steps
+    if (not fileList):
+        return
+    fileList = [f for f in fileList if container in f] #set of steps for this number
+    fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+    for step in fileList:
+        APLPost(step)
+
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
@@ -128,4 +146,5 @@ def main(containerList, cwd):
         APLPost(container, path)
 
 if __name__ == "__main__":
+    #testMain(sys.argv[1])
     main(sys.argv[1], sys.argv[2])
