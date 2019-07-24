@@ -80,12 +80,12 @@ def MSCEventTranslate(event):
         return ("Carrier Release", "CR")
     elif(event.find("Customs Release") != -1):
         return ("Customs Release", "CT")
-    elif(event.find("Dishcarged") != -1):
+    elif(event.find("Discharged") != -1):
         return ("Unloaded from Vessel", "UV")
     elif(event.find("Gate out Full") != -1):
         return ("Outgate Load", "OL")
     elif(event.find("Empty to Shipper") != -1):
-        return ("Enpty Equipment Dispatched", "EE")
+        return ("Empty Equipment Dispatched", "EE")
     elif(event.find("Gate in Full") != -1):
         return ("Ingate Load", "I")
     elif(event.find("Transshipment Discharged") != -1):
