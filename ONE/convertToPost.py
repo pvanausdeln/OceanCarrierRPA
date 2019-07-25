@@ -102,7 +102,7 @@ def ONEEventTranslate(event):
         if(event.find(key) != -1):
             return value, ONECodeToName(value)
     return (None, None)
-    
+
 
 
 def ONEPost(container, path):
@@ -118,7 +118,7 @@ def ONEPost(container, path):
                 postJson["country"] = postJson["location"].split(",")[-1]
                 if(row[3].strip() == ""):
                     continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+                postJson["eventTime"] = datetime.datetime.strptime(" ".join(row[3].strip().split(" ")[1:]), '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
                 postJson["vessel"] = row[4]
                 postJson["voyageNumber"] = row[5]
                 postJson["workOrderNumber"] = row[6]
@@ -140,7 +140,8 @@ def main(containerList, cwd):
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        ONEPost(container, path)
+        hi=ONEPost(container, path)
+    return hi
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
