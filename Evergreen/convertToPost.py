@@ -79,7 +79,10 @@ class baseInfo:
         "Vessel departed": "VD",
         "Vessel arrived": "VA",
         "Loaded": "AE",
-        "Discharged": "UV"
+        "Discharged": "UV",
+        "Received": "CO",
+        "Full import ": "CO",
+        "Empty container received": "RD"
     }
 
 def EvergreenCodeToName(code):
@@ -95,6 +98,10 @@ def EvergreenCodeToName(code):
         return "OUTGATE"
     elif(code == "I"):
         return "INGATE"
+    elif(code == "CO"):
+        return "Cargo Received"
+    elif(code == "RD"):
+        return "Return Container"
     return None
 
 def EvergreenEventTranslate(event):
@@ -106,32 +113,31 @@ def EvergreenEventTranslate(event):
 
 
 def EvergreenPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader) # skip first row
-            for row in reader:
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
-                    continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = EvergreenEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "Evergreen RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+    if(os.path.isfile(path+"ContainerInformation\\"+container+".json")):
+        with open(path+"ContainerInformation\\"+container+".json") as containerInfo:
+            data = json.load(containerInfo)
+            postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+            postJson["unitId"] = container
+            postJson["location"] = data.get("Location")
+            postJson["city"] = data.get("Location").split(" ")[0]
+            postJson["eventTime"] = datetime.datetime.strptime(data.get("Date").title(), '%a-%m-%Y').strftime('%m-%d-%Y %H:%M:%S')
+            try:
+                postJson["vessel"] = data.get("Vessel Voyage").rsplit(',', 1)[0]
+                postJson["voyageNumber"] = data.get("Vessel Voyage")..rsplit(',', 1)[1]
+            except:
+                return
+            postJson["workOrderNumber"] = data.get("WONumber")
+            postJson["billOfLadingNumber"] = data.get("BOLNumber")
+            postJson["eventCode"], postJson["eventName"] = data.get("Container Moves")
+            postJson["resolvedEventSource"] = "Evergreen RPA"
+            postJson["codeType"] = "UNLOCODE"
+            postJson["reportSource"] = "OceanEvent"
+            print(json.dumps(postJson))
+            if(postJson["eventCode"] == None):
+                return
+            headers = {'content-type':'application/json'}
+            r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+            print(r)
     return
 
 def main(containerList, cwd):
