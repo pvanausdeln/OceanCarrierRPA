@@ -74,15 +74,25 @@ class baseInfo:
     }
 
     StatusMapOOCL = {
+        "Arrived": "A",
+        "Highway Arrival": "A",
         "Vessel Arrived": "VA",
         "Vessel Departed": "VD",
         "Loaded": "AE",
         "Discharged": "UV",
-        "Carrier Released": "CR"
+        "Carrier Released": "CR",
+        "Container Received": "CO",
+        "Picked Up for Delivery": "X3",
+        "Container Returned": "RD",
+        "Container Deramped": "UR",
+        "Ramped": "AL",
+        "Released": "CA"
     }
 
 def OOCLCodeToName(code):
-    if(code == "VA"):
+    if(code == "A"):
+        return "ARRIVED"
+    elif(code == "VA"):
         return "Vessel Arrival"
     elif(code == "VD"):
         return "Vessel Departure"
@@ -92,6 +102,18 @@ def OOCLCodeToName(code):
         return "Unloaded From Vessel"
     elif(code == "CR"):
         return "Carrier Release"
+    elif(code == "CO"):
+        return "Cargo Received"
+    elif(code == "X3"):
+        return "Arrived for Pickup"
+    elif(code == "RD"):
+        return "Return Container"
+    elif(code == "UR"):
+        return "UNLOADED_FROM_RAIL"
+    elif(code == "AL"):
+        return "LOADED_ON_RAIL"
+    elif(code == "CA"):
+        return "Cargo Available"
     return None
 
 def OOCLEventTranslate(event):
@@ -115,12 +137,14 @@ def OOCLPost(container, path):
                 postJson["country"] = postJson["location"].split(",")[-1]
                 if(row[3].strip() == ""):
                     continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[4]
-                postJson["voyageNumber"] = row[5]
-                postJson["workOrderNumber"] = row[6]
-                postJson["billOfLadingNumber"] = row[7]
-                postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[1])
+                postJson["eventTime"] = datetime.datetime.strptime(row[4].rsplit(" ", 1)[0], '%d %b %Y, %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+                postJson["vessel"] = row[7]
+                postJson["voyageNumber"] = row[8]
+                postJson["workOrderNumber"] = row[9]
+                postJson["billOfLadingNumber"] = row[10]
+                postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[0])
+                if(postJson["eventCode"] == "AE" and row[3] == "Railway"):
+                    postJson["eventCode"], postJson["EventName"] = ("AL","LOADED_ON_RAILWAY")
                 postJson["resolvedEventSource"] = "OOCL RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
@@ -132,6 +156,12 @@ def OOCLPost(container, path):
                 print(r)
     return
 
+def testMain(container):
+    path=""
+    for x in os.getcwd().split("\\"):
+        path+=x+"\\\\"
+    OOCLPost(container, path)
+
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
@@ -140,4 +170,5 @@ def main(containerList, cwd):
         OOCLPost(container, path)
 
 if __name__ == "__main__":
+    #testMain(sys.argv[1])
     main(sys.argv[1], sys.argv[2])
