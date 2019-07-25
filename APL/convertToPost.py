@@ -80,11 +80,11 @@ def APLEventTranslate(event):
         return ("Carrier Release", "CR")
     elif(event.find("Customs Release") != -1):
         return ("Customs Release", "CT")
-    elif(event.find("Transshipment Discharged") != -1):
+    elif(event.find("Discharged in transhipment") != -1):
         return ("Unloaded from Vessel", "UV")
     elif(event.find("Gate Out Full") != -1):
         return ("Outgate Load", "OL")
-    elif(event.find("Empty to Shipper") != -1):
+    elif(event.find("Empty to shipper") != -1):
         return ("Empty Equipment Dispatched", "EE")
     elif(event.find("Empty in Container Yard") != -1):
         return ("Return Container", "RD")
@@ -98,45 +98,42 @@ def APLEventTranslate(event):
         return ("RAIL_ARRIVAL", "AR")
     elif(event.find("Unloaded from Rail") != -1):
         return ("UNLOADED_FROM_RAIL", "UR")
-    
+    return (None, None)
+
 
 
 def APLPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
+    if(os.path.isfile(path+"ContainerInformation\\"+ container + ".csv")):
+        with open(path+"ContainerInformation\\"+ container +".csv") as containerInfo:
             reader = csv.reader(containerInfo)
             next(reader)
             for row in reader:
+                if(row[0].find("Provisional moves not found, please feel free to use Contact Support link for more information")!= -1):
+                    continue
                 postJson = copy.deepcopy(baseInfo.shipmentEventBase)
                 postJson["unitId"] = container
                 postJson["location"] = row[3]
                 postJson["city"] = postJson["location"].split(",")[0]
                 postJson["eventTime"] = datetime.datetime.strptime(row[0], '%a %d %b %Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[4]
-                postJson["voyageNumber"] = row[5]
+                postJson["vessel"] = str(row[4])
+                postJson["voyageNumber"] = str(row[5])
                 postJson["workOrderNumber"] = row[6]
                 postJson["billOfLadingNumber"] = row[7]
                 postJson["unitType"] = row[8]
-                postJson["eventCode"], postJson["eventName"] = APLEventTranslate(row[2])
+                postJson["eventName"], postJson["eventCode"] = APLEventTranslate(row[2])
                 postJson["resolvedEventSource"] = "APL RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
+                # print(json.dumps(postJson))
                 if(postJson["eventCode"] == None):
                     continue
                 headers = {'content-type':'application/json'}
                 r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+                # print(r)
+
+
     return
 
-def testMain(container): #test main
-    fileList = glob.glob(os.getcwd() + "\\ContainerInformation\\"+container+".csv", recursive = True) #get all the json steps
-    if (not fileList):
-        return
-    fileList = [f for f in fileList if container in f] #set of steps for this number
-    fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
-    for step in fileList:
-        APLPost(step)
 
 def main(containerList, cwd):
     path=""
@@ -144,6 +141,8 @@ def main(containerList, cwd):
         path+=x+"\\\\"
     for container in containerList:
         APLPost(container, path)
+
+
 
 if __name__ == "__main__":
     #testMain(sys.argv[1])
