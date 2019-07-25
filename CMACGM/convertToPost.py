@@ -84,7 +84,7 @@ def CMACGMEventTranslate(event):
         return ("Unloaded from Vessel", "UV")
     elif(event.find("Gate Out Full") != -1):
         return ("Outgate Load", "OL")
-    elif(event.find("Empty to Shipper") != -1):
+    elif(event.find("Empty to shipper") != -1):
         return ("Empty Equipment Dispatched", "EE")
     elif(event.find("Empty in Container Yard") != -1):
         return ("Return Container", "RD")
@@ -98,7 +98,8 @@ def CMACGMEventTranslate(event):
         return ("RAIL_ARRIVAL", "AR")
     elif(event.find("Unloaded from Rail") != -1):
         return ("UNLOADED_FROM_RAIL", "UR")
-    
+    return (None, None)
+
 
 
 def CMACGMPost(container, path):
@@ -106,17 +107,18 @@ def CMACGMPost(container, path):
         with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
             reader = csv.reader(containerInfo)
             next(reader)
+
             for row in reader:
                 postJson = copy.deepcopy(baseInfo.shipmentEventBase)
                 postJson["unitId"] = container
                 postJson["location"] = row[3]
                 postJson["city"] = postJson["location"].split(",")[0]
                 postJson["eventTime"] = datetime.datetime.strptime(row[0], '%a %d %b %Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[4]
-                postJson["voyageNumber"] = row[5]
+                postJson["vessel"] = str(row[4])
+                postJson["voyageNumber"] = str(row[5])
                 postJson["workOrderNumber"] = row[6]
                 postJson["billOfLadingNumber"] = row[7]
-                postJson["eventCode"], postJson["eventName"] = CMACGMEventTranslate(row[2])
+                postJson["eventName"], postJson["eventCode"] = CMACGMEventTranslate(row[2])
                 postJson["resolvedEventSource"] = "CMACGM RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
@@ -125,7 +127,8 @@ def CMACGMPost(container, path):
                     continue
                 headers = {'content-type':'application/json'}
                 r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+                # print(r)
+
     return
 
 def testMain(container): #test main
