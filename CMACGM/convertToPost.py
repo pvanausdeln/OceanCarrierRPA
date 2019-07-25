@@ -109,6 +109,8 @@ def CMACGMPost(container, path):
             next(reader)
 
             for row in reader:
+                if(row[0].find("Provisional moves not found, please feel free to use Contact Support link for more information")!= -1):
+                    continue
                 postJson = copy.deepcopy(baseInfo.shipmentEventBase)
                 postJson["unitId"] = container
                 postJson["location"] = row[3]
@@ -118,6 +120,7 @@ def CMACGMPost(container, path):
                 postJson["voyageNumber"] = str(row[5])
                 postJson["workOrderNumber"] = row[6]
                 postJson["billOfLadingNumber"] = row[7]
+                postJson["unitType"] = row[8]
                 postJson["eventName"], postJson["eventCode"] = CMACGMEventTranslate(row[2])
                 postJson["resolvedEventSource"] = "CMACGM RPA"
                 postJson["codeType"] = "UNLOCODE"
