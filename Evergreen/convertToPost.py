@@ -120,10 +120,10 @@ def EvergreenPost(container, path):
             postJson["unitId"] = container
             postJson["location"] = data.get("Location")
             postJson["city"] = data.get("Location").split(" ")[0]
-            postJson["eventTime"] = datetime.datetime.strptime(data.get("Date").title(), '%a-%m-%Y').strftime('%m-%d-%Y %H:%M:%S')
+            postJson["eventTime"] = datetime.datetime.strptime(data.get("Date").title(), '%b-%d-%Y').strftime('%m-%d-%Y %H:%M:%S')
             try:
                 postJson["vessel"] = data.get("Vessel Voyage").rsplit(',', 1)[0]
-                postJson["voyageNumber"] = data.get("Vessel Voyage")..rsplit(',', 1)[1]
+                postJson["voyageNumber"] = data.get("Vessel Voyage").rsplit(',', 1)[1]
             except:
                 return
             postJson["workOrderNumber"] = data.get("WONumber")
