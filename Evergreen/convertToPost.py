@@ -79,6 +79,7 @@ class baseInfo:
         "Vessel departed": "VD",
         "Vessel arrived": "VA",
         "Loaded": "AE",
+        "loaded on vessel": "AE",
         "Discharged": "UV",
         "Received": "CO",
         "Full import ": "CO",
@@ -119,16 +120,18 @@ def EvergreenPost(container, path):
             postJson = copy.deepcopy(baseInfo.shipmentEventBase)
             postJson["unitId"] = container
             postJson["location"] = data.get("Location")
+            postJson["unitSize"] = data.get("Size/Type").split("'")[0]
             postJson["city"] = data.get("Location").split(" ")[0]
             postJson["eventTime"] = datetime.datetime.strptime(data.get("Date").title(), '%b-%d-%Y').strftime('%m-%d-%Y %H:%M:%S')
             try:
-                postJson["vessel"] = data.get("Vessel Voyage").rsplit(',', 1)[0]
-                postJson["voyageNumber"] = data.get("Vessel Voyage").rsplit(',', 1)[1]
+                print(data.get("Vessel Voyage").rsplit(' ', 1)[0])
+                postJson["vessel"] = data.get("Vessel Voyage").rsplit(' ', 1)[0]
+                postJson["voyageNumber"] = data.get("Vessel Voyage").rsplit(' ', 1)[1]
             except:
                 return
             postJson["workOrderNumber"] = data.get("WONumber")
             postJson["billOfLadingNumber"] = data.get("BOLNumber")
-            postJson["eventCode"], postJson["eventName"] = data.get("Container Moves")
+            postJson["eventCode"], postJson["eventName"] = EvergreenEventTranslate(data.get("Container Moves"))
             postJson["resolvedEventSource"] = "Evergreen RPA"
             postJson["codeType"] = "UNLOCODE"
             postJson["reportSource"] = "OceanEvent"
@@ -140,6 +143,12 @@ def EvergreenPost(container, path):
             print(r)
     return
 
+def testMain(container):
+    path=""
+    for x in os.getcwd().split("\\"):
+        path+=x+"\\\\"
+    EvergreenPost(container, path)
+
 def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
@@ -148,4 +157,5 @@ def main(containerList, cwd):
         EvergreenPost(container, path)
 
 if __name__ == "__main__":
+    #testMain(sys.argv[1])
     main(sys.argv[1], sys.argv[2])
