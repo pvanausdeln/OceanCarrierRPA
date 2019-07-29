@@ -105,7 +105,7 @@
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="588,4655" sap2010:WorkflowViewState.IdRef="Sequence_27">
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="588,4705" sap2010:WorkflowViewState.IdRef="Sequence_27">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:Int32" Name="index" />
               </Sequence.Variables>
@@ -129,13 +129,13 @@
                   <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a2ddca0119a502708112449062b37782" Selector="&lt;webctrl name='SEL' parentid='quick' tableRow='2' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                 </ui:Click.Target>
               </ui:Click>
-              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="550,4417" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
+              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="550,4467" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
                 <ui:ForEach.Body>
                   <ActivityAction x:TypeArguments="x:Object">
                     <ActivityAction.Argument>
                       <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
                     </ActivityAction.Argument>
-                    <Sequence sap:VirtualizedContainerService.HintSize="518,4283" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                    <Sequence sap:VirtualizedContainerService.HintSize="518,4334" sap2010:WorkflowViewState.IdRef="Sequence_49">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Boolean" Name="pathExists" />
                         <Variable x:TypeArguments="x:Int32" Name="ind" />
@@ -154,7 +154,7 @@
                           <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3d8c164c3401ba5fd4723d4a5dc0005e" Selector="&lt;webctrl tag='INPUT' idx='17' /&gt;" WaitForReady="INTERACTIVE" />
                         </ui:TypeInto.Target>
                       </ui:TypeInto>
-                      <While sap:VirtualizedContainerService.HintSize="480,1595" sap2010:WorkflowViewState.IdRef="While_2">
+                      <While sap:VirtualizedContainerService.HintSize="480,1646" sap2010:WorkflowViewState.IdRef="While_2">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -162,7 +162,7 @@
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
                         <While.Condition>[not notvalid_num and not valid]</While.Condition>
-                        <Sequence sap:VirtualizedContainerService.HintSize="368,1437" sap2010:WorkflowViewState.IdRef="Sequence_78">
+                        <Sequence sap:VirtualizedContainerService.HintSize="368,1489" sap2010:WorkflowViewState.IdRef="Sequence_78">
                           <Sequence.Variables>
                             <Variable x:TypeArguments="x:Boolean" Name="badChars" />
                           </Sequence.Variables>
@@ -177,6 +177,22 @@
                               <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
                             </ui:SendHotkey.Target>
                           </ui:SendHotkey>
+                          <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'IMG'" sap:VirtualizedContainerService.HintSize="330,106" sap2010:WorkflowViewState.IdRef="Click_11" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                            <ui:Click.CursorPosition>
+                              <ui:CursorPosition Position="Center">
+                                <ui:CursorPosition.OffsetX>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetX>
+                                <ui:CursorPosition.OffsetY>
+                                  <InArgument x:TypeArguments="x:Int32" />
+                                </ui:CursorPosition.OffsetY>
+                              </ui:CursorPosition>
+                            </ui:Click.CursorPosition>
+                            <ui:Click.Target>
+                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a84cbd8d3c28d40c22aa5ff5da68bc3c" Selector="&lt;webctrl aaname='Refresh' parentid='captcha_div_s' tag='IMG' /&gt;" WaitForReady="INTERACTIVE" />
+                            </ui:Click.Target>
+                          </ui:Click>
+                          <Delay Duration="00:00:01" sap:VirtualizedContainerService.HintSize="330,22" sap2010:WorkflowViewState.IdRef="Delay_1" />
                           <ui:GetOCRText WordsInfo="{x:Null}" ContinueOnError="True" DisplayName="Get OCR Text 'IMG  captchaImg'" sap:VirtualizedContainerService.HintSize="330,168" sap2010:WorkflowViewState.IdRef="GetOCRText_5">
                             <ui:GetOCRText.OCREngine>
                               <ActivityFunc x:TypeArguments="sd:Image, scg:IEnumerable(scg:KeyValuePair(sd:Rectangle, x:String))">
@@ -198,7 +214,7 @@
                               <OutArgument x:TypeArguments="x:Boolean">[badChars]</OutArgument>
                             </Assign.To>
                             <Assign.Value>
-                              <InArgument x:TypeArguments="x:Boolean">[captcha.Contains("J") &lt;&gt; captcha.Contains("I") or captcha.Contains("C") or captcha.Contains("G") or captcha.Contains("l") or captcha.Any(function(x) NOT char.IsLetter(x))]</InArgument>
+                              <InArgument x:TypeArguments="x:Boolean">[captcha.Contains("J") &lt;&gt; captcha.Contains("I") &lt;&gt; captcha.Contains("C") &lt;&gt; captcha.Contains("G") &lt;&gt; captcha.Contains("]")]</InArgument>
                             </Assign.Value>
                           </Assign>
                           <While sap:VirtualizedContainerService.HintSize="480,224" sap2010:WorkflowViewState.IdRef="While_3">
@@ -253,7 +269,7 @@
                                   <OutArgument x:TypeArguments="x:Boolean">[badChars]</OutArgument>
                                 </Assign.To>
                                 <Assign.Value>
-                                  <InArgument x:TypeArguments="x:Boolean">[captcha.Contains("J") or captcha.Contains("I") or captcha.Contains("C") or captcha.Contains("G") or captcha.Contains("l") or captcha.Any(function(x) NOT char.IsLetter(x))]</InArgument>
+                                  <InArgument x:TypeArguments="x:Boolean">[captcha.Contains("J") &lt;&gt; captcha.Contains("I") &lt;&gt; captcha.Contains("C") &lt;&gt; captcha.Contains("G") &lt;&gt; captcha.Contains("]")]</InArgument>
                                 </Assign.Value>
                               </Assign>
                             </Sequence>
@@ -279,11 +295,6 @@
                             </ui:Click.Target>
                           </ui:Click>
                           <Delay Duration="00:00:01" sap:VirtualizedContainerService.HintSize="330,22" sap2010:WorkflowViewState.IdRef="Delay_2" />
-                          <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="330,116" sap2010:WorkflowViewState.IdRef="SendHotkey_3" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
-                            <ui:SendHotkey.Target>
-                              <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
-                            </ui:SendHotkey.Target>
-                          </ui:SendHotkey>
                           <ui:UiElementExists DisplayName="Element Exists 'TD'" Exists="[notvalid_num]" sap:VirtualizedContainerService.HintSize="330,106" sap2010:WorkflowViewState.IdRef="UiElementExists_6">
                             <ui:UiElementExists.Target>
                               <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="e0719e61025de51b38a78b5c7392bb0f" Selector="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;div&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table' idx='2' tag='TABLE' /&gt;&lt;webctrl tag='TD' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
@@ -426,7 +437,7 @@
               <av:PointCollection x:Key="ConnectorLocation">298,425.5 298,489</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <p:PythonScope DisplayName="Python Scope" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="PythonScope_1" Path="C:\Python36" TargetPlatform="x64">
+          <p:PythonScope DisplayName="Python Scope" sap:VirtualizedContainerService.HintSize="398,249" sap2010:WorkflowViewState.IdRef="PythonScope_1" Path="C:\Python36" TargetPlatform="x64">
             <p:PythonScope.Body>
               <ActivityAction x:TypeArguments="x:Object">
                 <ActivityAction.Argument>
@@ -438,7 +449,7 @@
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
-                  <p:LoadScript Code="{x:Null}" DisplayName="Load Python Script" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="LoadScript_1" Result="[Script]" ScriptFile="convertToPost.py" />
+                  <p:LoadScript Code="{x:Null}" DisplayName="Load Python Script" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="LoadScript_1" Result="[Script]" ScriptFile="convertToPostEvergreen.py" />
                   <p:InvokeMethod Result="{x:Null}" DisplayName="Invoke Python Method" sap:VirtualizedContainerService.HintSize="330,22" sap2010:WorkflowViewState.IdRef="InvokeMethod_1" Instance="[Script]" Name="main" Parameters="[{Containers.Cast(of String)().ToArray(), Environment.CurrentDirectory.ToString}]" />
                 </Sequence>
               </ActivityAction>
