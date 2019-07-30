@@ -118,9 +118,9 @@ def CMACGMPost(container, path):
                 postJson["eventTime"] = datetime.datetime.strptime(row[0], '%a %d %b %Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
                 postJson["vessel"] = str(row[4])
                 postJson["voyageNumber"] = str(row[5])
-                postJson["workOrderNumber"] = row[6]
-                postJson["billOfLadingNumber"] = row[7]
-                postJson["unitType"] = row[8]
+                #postJson["workOrderNumber"] = row[6]
+                #postJson["billOfLadingNumber"] = row[7]
+                #postJson["unitType"] = row[6]
                 postJson["eventName"], postJson["eventCode"] = CMACGMEventTranslate(row[2])
                 postJson["resolvedEventSource"] = "CMACGM RPA"
                 postJson["codeType"] = "UNLOCODE"
