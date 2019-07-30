@@ -140,8 +140,6 @@ def OOCLPost(container, path):
                 postJson["eventTime"] = datetime.datetime.strptime(row[4].rsplit(" ", 1)[0], '%d %b %Y, %H:%M').strftime('%m-%d-%Y %H:%M:%S')
                 postJson["vessel"] = row[7]
                 postJson["voyageNumber"] = row[8]
-                postJson["workOrderNumber"] = row[9]
-                postJson["billOfLadingNumber"] = row[10]
                 postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[0])
                 if(postJson["eventCode"] == "AE" and row[3] == "Railway"):
                     postJson["eventCode"], postJson["EventName"] = ("AL","LOADED_ON_RAILWAY")

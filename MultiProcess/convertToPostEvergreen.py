@@ -129,8 +129,6 @@ def EvergreenPost(container, path):
                 postJson["voyageNumber"] = data.get("Vessel Voyage").rsplit(' ', 1)[1]
             except:
                 return
-            postJson["workOrderNumber"] = data.get("WONumber")
-            postJson["billOfLadingNumber"] = data.get("BOLNumber")
             postJson["eventCode"], postJson["eventName"] = EvergreenEventTranslate(data.get("Container Moves"))
             postJson["resolvedEventSource"] = "Evergreen RPA"
             postJson["codeType"] = "UNLOCODE"
