@@ -1,10 +1,28 @@
 import pandas as pd 
 import os
+from difflib import get_close_matches
+
+# ONE         = "ONE"
+# EVE         = "EVE"
+# APL         = "APL"
+# CGM         = "CGM"
+# OC2         = "OC2"
+
+mapping = {
+    "ONE" : "ONE",
+    "EVE" : "EVERGREEN",
+    "APL" : "APL",
+    "CGM" : "CGM",
+    "OC2" : "OOCL"
+}
+
+carrier_prefixes = list( mapping.keys() )
 
 # df = dataframe. object class used by pandas to represent a matrix 
 df = pd.read_excel("Container_Tracking.xlsx")
 # grabs only unique carrier names
 carriers = df.carrier.unique()
+excels = {}
 
 # for each carrier, filter all the rows with that carrier name
 # and download them as .xlsx
@@ -17,12 +35,18 @@ for carrier in carriers:
     rows_df = df.loc[ df['carrier'].isin( [str_carrier] ) ] #
     rows_df.set_index('unitid', inplace=True)
 
-    # modify for where the .xlsx file should exist
-    # hopefully, the values in the carrier column, match with the folder names
-    filename = str_carrier.upper() + "_Container_Tracking.xlsx"
+    carrier_prefix  = get_close_matches(str_carrier.upper(), carrier_prefixes, 1, 0.4)[0]
+    filename        = mapping[carrier_prefix] + "_Container_Tracking.xlsx"
+    if( filename not in excels ):
+        excels[filename] = rows_df
+    else:
+        frames = [ excels[filename] , rows_df ]
+        excels[filename] = pd.concat(frames)
+
+
+for filename in excels:
     if( os.path.exists( filename ) ):
         os.remove( filename )
-
-    rows_df.to_excel( filename )
+    excels[filename].to_excel(filename)
 
 
