@@ -13,7 +13,7 @@ mapping = {
 carrier_prefixes = list( mapping.keys() )
 
 # df = dataframe. object class used by pandas to represent a matrix
-df = pd.read_excel(".\\..\\Container_Tracking.xlsx") #Change the path to "Container_Tracking.xlsx" if executed individually
+df = pd.read_excel("Container_Tracking.xlsx") #Change the path to "Container_Tracking.xlsx" if executed individually
 # grabs only unique carrier names
 carriers = df.carrier.unique()
 excels = {}
@@ -33,7 +33,7 @@ for carrier in carriers:
 # play with the cutoff point range for accuracy tweaking. 0.0 - 1.0
     carrier_prefix  = get_close_matches( str(str_carrier).upper(),carrier_prefixes,1,0.4)[0]
     # creates the prefix filename. CHANGE this for additional paths.
-    filename        = ".\\..\\" + mapping[carrier_prefix] + "_Container_Tracking.xlsx" #Remove the ".\\..\\" if executed individually
+    filename        = mapping[carrier_prefix] + "_Container_Tracking.xlsx" #Remove the ".\\..\\" if executed individually
     if( filename not in excels ):
         excels[filename] = rows_df
     else:

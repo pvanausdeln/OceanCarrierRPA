@@ -146,7 +146,7 @@
               <av:PointCollection x:Key="ConnectorLocation">298,345.5 298,374.5</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[containerIndex]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Containers]">
+          <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[containerIndex]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="550,3554" sap2010:WorkflowViewState.IdRef="ForEach`1_1" Values="[Containers]">
             <ui:ForEach.Body>
               <ActivityAction x:TypeArguments="x:Object">
                 <ActivityAction.Argument>
@@ -332,7 +332,7 @@
                       </ActivityAction>
                     </ui:ForEachRow.Body>
                   </ui:ForEachRow>
-                  <ui:PathExists DisplayName="Path Exists" Exists="[pathExists]" sap:VirtualizedContainerService.HintSize="480,89" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="[in_config(&quot;Write_APL&quot;)]" PathType="Folder">
+                  <ui:PathExists DisplayName="Path Exists" Exists="[pathExists]" sap:VirtualizedContainerService.HintSize="480,89" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="./ContainerInformation/" PathType="Folder">
                     <sap:WorkflowViewStateService.ViewState>
                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -348,10 +348,10 @@
                       </scg:Dictionary>
                     </sap:WorkflowViewStateService.ViewState>
                     <If.Else>
-                      <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="[in_config(&quot;Write_APL&quot;)]" />
+                      <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="./ContainerInformation/" />
                     </If.Else>
                   </If>
-                  <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[ExtractDataTable]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[in_config(&quot;Write_APL&quot;)+ &quot;/&quot; + item.ToString + &quot;.csv&quot;]" sap:VirtualizedContainerService.HintSize="480,87" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" />
+                  <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[ExtractDataTable]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;./ContainerInformation/&quot; + item.ToString + &quot;.csv&quot;]" sap:VirtualizedContainerService.HintSize="480,87" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" />
                   <Assign sap:VirtualizedContainerService.HintSize="480,60" sap2010:WorkflowViewState.IdRef="Assign_7">
                     <Assign.To>
                       <OutArgument x:TypeArguments="x:Int32">[index]</OutArgument>

@@ -91,13 +91,13 @@
           <av:PointCollection x:Key="ConnectorLocation">298,295.5 298,374.5</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx?site=uk&amp;lang=eng">
+      <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="618,4365" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx?site=uk&amp;lang=eng">
         <ui:OpenBrowser.Body>
           <ActivityAction x:TypeArguments="x:Object">
             <ActivityAction.Argument>
               <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
             </ActivityAction.Argument>
-            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="588,4267" sap2010:WorkflowViewState.IdRef="Sequence_27">
+            <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="588,4266" sap2010:WorkflowViewState.IdRef="Sequence_27">
               <Sequence.Variables>
                 <Variable x:TypeArguments="x:Int32" Name="index2" />
               </Sequence.Variables>
@@ -146,13 +146,13 @@
                   </ui:BrowserScope.Body>
                 </ui:BrowserScope>
               </Sequence>
-              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[index2]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="550,3165" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
+              <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[index2]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="550,3164" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
                 <ui:ForEach.Body>
                   <ActivityAction x:TypeArguments="x:Object">
                     <ActivityAction.Argument>
                       <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
                     </ActivityAction.Argument>
-                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="518,3032" sap2010:WorkflowViewState.IdRef="Sequence_42">
+                    <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="518,3031" sap2010:WorkflowViewState.IdRef="Sequence_42">
                       <Sequence.Variables>
                         <Variable x:TypeArguments="x:Boolean" Name="pathExists" />
                         <Variable x:TypeArguments="x:Boolean" Default="False" Name="elementExists" />
@@ -188,7 +188,7 @@
                           <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="3e085f6ae98efd3424cde3ec797652b1" Selector="&lt;html app='chrome.exe' htmlwindowname='vt' title='OOCL - Cargo Tracking' /&gt;&lt;webctrl aaname='Equipment Activities' parentid='Tab1' tag='A' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
                         </ui:UiElementExists.Target>
                       </ui:UiElementExists>
-                      <If Condition="[elementExists]" sap:VirtualizedContainerService.HintSize="480,208" sap2010:WorkflowViewState.IdRef="If_3">
+                      <If Condition="[elementExists]" sap:VirtualizedContainerService.HintSize="480,207" sap2010:WorkflowViewState.IdRef="If_3">
                         <If.Else>
                           <ui:Continue sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="Continue_1" />
                         </If.Else>
@@ -322,7 +322,7 @@
                           </ActivityAction>
                         </ui:ForEachRow.Body>
                       </ui:ForEachRow>
-                      <ui:PathExists DisplayName="Path Exists" Exists="[pathExists]" sap:VirtualizedContainerService.HintSize="480,89" sap2010:WorkflowViewState.IdRef="PathExists_3" Path="[in_config(&quot;Write_OOCL&quot;)]" PathType="Folder">
+                      <ui:PathExists DisplayName="Path Exists" Exists="[pathExists]" sap:VirtualizedContainerService.HintSize="480,89" sap2010:WorkflowViewState.IdRef="PathExists_1" Path="./ContainerInformation/" PathType="Folder">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -338,10 +338,10 @@
                           </scg:Dictionary>
                         </sap:WorkflowViewStateService.ViewState>
                         <If.Else>
-                          <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="CreateDirectory_3" Path="[in_config(&quot;Write_OOCL&quot;)]" />
+                          <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="CreateDirectory_1" Path="./ContainerInformation/" />
                         </If.Else>
                       </If>
-                      <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[ExtractDataTable]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[in_config(&quot;Write_OOCL&quot;)+&quot;/&quot; + item.ToString+&quot;.csv&quot;]" sap:VirtualizedContainerService.HintSize="480,87" sap2010:WorkflowViewState.IdRef="WriteCsvFile_4" />
+                      <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[ExtractDataTable]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;./ContainerInformation/&quot; + item.ToString + &quot;.csv&quot;]" sap:VirtualizedContainerService.HintSize="480,87" sap2010:WorkflowViewState.IdRef="WriteCsvFile_1" />
                       <Assign sap:VirtualizedContainerService.HintSize="480,60" sap2010:WorkflowViewState.IdRef="Assign_14">
                         <Assign.To>
                           <OutArgument x:TypeArguments="x:Int32">[index]</OutArgument>
