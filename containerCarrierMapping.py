@@ -7,13 +7,17 @@ mapping = {
     "EVE" : "EVERGREEN",
     "APL" : "APL",
     "CGM" : "CGM",
-    "OC2" : "OOCL"
+    "OC2" : "OOCL",
+    "MISC": "MISC"
 }
 
 carrier_prefixes = list( mapping.keys() )
 
 # df = dataframe. object class used by pandas to represent a matrix
 df = pd.read_excel("Container_Tracking.xlsx") #Change the path to "Container_Tracking.xlsx" if executed individually
+timestamps_df = pd.read_excel("Timestamps.xlsx")
+df = pd.merge(df, timestamps_df, left_on="unitid", right_on="unitid")
+df.set_index('unitid')
 # grabs only unique carrier names
 carriers = df.carrier.unique()
 excels = {}
@@ -29,7 +33,11 @@ for carrier in carriers:
     # finds the closest match to the keys in mapping.
     # i.e. APLU-BLU would match with the "APL" key in mapping.
     # play with the cutoff point range for accuracy tweaking. 0.0 - 1.0
-    carrier_prefix  = get_close_matches( str(carrier).upper(),carrier_prefixes,1,0.4)[0]
+    try:
+        carrier_prefix  = get_close_matches( str(carrier).upper(), carrier_prefixes, 1, 0.4)[0]
+    except Exception as e:
+        print(e)
+        print("COULD NOT FIND CARRIER FOR " + carrier)
 
     # creates the prefix filename. CHANGE this for additional paths.
     filename = mapping[carrier_prefix] + "_Container_Tracking.xlsx" #Remove the ".\\..\\" if executed individually
@@ -43,4 +51,5 @@ for carrier in carriers:
 for filename in excels:
     if( os.path.exists( filename ) ):
         os.remove( filename )
+    excels[filename].drop_duplicates(inplace=True)
     excels[filename].to_excel(filename)
