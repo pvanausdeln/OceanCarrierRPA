@@ -2,12 +2,6 @@ import pandas as pd
 import os
 from difflib import get_close_matches
 
-# ONE         = "ONE"
-# EVE         = "EVE"
-# APL         = "APL"
-# CGM         = "CGM"
-# OC2         = "OC2"
-
 mapping = {
     "ONE" : "ONE",
     "EVE" : "EVERGREEN",
@@ -35,7 +29,12 @@ for carrier in carriers:
     rows_df = df.loc[ df['carrier'].isin( [str_carrier] ) ] #
     rows_df.set_index('unitid', inplace=True)
 
+    # finds the closest match to the keys in mapping.
+    # i.e. APLU-BLU would match with the "APL" key in mapping.
+    # play with the cutoff point range for accuracy tweaking. 0.0 - 1.0
     carrier_prefix  = get_close_matches(str_carrier.upper(), carrier_prefixes, 1, 0.4)[0]
+
+    # creates the prefix filename. CHANGE this for additional paths.
     filename        = mapping[carrier_prefix] + "_Container_Tracking.xlsx"
     if( filename not in excels ):
         excels[filename] = rows_df
