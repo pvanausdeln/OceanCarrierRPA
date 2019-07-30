@@ -69,26 +69,27 @@
       <Variable x:TypeArguments="sd:DataTable" Default="[New System.Data.DataTable]" Name="ExtractDataTable" />
       <Variable x:TypeArguments="x:Int32" Default="0" Name="rowindex" />
       <Variable x:TypeArguments="p:PythonObject" Name="Script" />
+      <Variable x:TypeArguments="x:Boolean" Name="fileExists" />
     </Flowchart.Variables>
     <sap:WorkflowViewStateService.ViewState>
       <scg:Dictionary x:TypeArguments="x:String, x:Object">
         <x:Boolean x:Key="IsExpanded">False</x:Boolean>
         <av:Point x:Key="ShapeLocation">260,2.5</av:Point>
         <av:Size x:Key="ShapeSize">60,75</av:Size>
-        <av:PointCollection x:Key="ConnectorLocation">290,77.5 290,107.5 298,107.5 298,124.5</av:PointCollection>
+        <av:PointCollection x:Key="ConnectorLocation">290,77.5 290,117.5</av:PointCollection>
         <x:Double x:Key="Height">1006</x:Double>
         <x:Double x:Key="Width">672.5</x:Double>
       </scg:Dictionary>
     </sap:WorkflowViewStateService.ViewState>
     <Flowchart.StartNode>
-      <x:Reference>__ReferenceID3</x:Reference>
+      <x:Reference>__ReferenceID5</x:Reference>
     </Flowchart.StartNode>
     <FlowStep x:Name="__ReferenceID0">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <av:Point x:Key="ShapeLocation">190,244.5</av:Point>
+          <av:Point x:Key="ShapeLocation">192,494.5</av:Point>
           <av:Size x:Key="ShapeSize">216,51</av:Size>
-          <av:PointCollection x:Key="ConnectorLocation">298,295.5 298,374.5</av:PointCollection>
+          <av:PointCollection x:Key="ConnectorLocation">300,545.5 300,624.5</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx?site=uk&amp;lang=eng">
@@ -382,9 +383,9 @@
         <FlowStep x:Name="__ReferenceID2">
           <sap:WorkflowViewStateService.ViewState>
             <scg:Dictionary x:TypeArguments="x:String, x:Object">
-              <av:Point x:Key="ShapeLocation">190,374.5</av:Point>
+              <av:Point x:Key="ShapeLocation">192,624.5</av:Point>
               <av:Size x:Key="ShapeSize">216,51</av:Size>
-              <av:PointCollection x:Key="ConnectorLocation">298,425.5 298,489</av:PointCollection>
+              <av:PointCollection x:Key="ConnectorLocation">300,675.5 300,739</av:PointCollection>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
           <p:PythonScope DisplayName="Python Scope" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="PythonScope_1" Path="C:\Python36" TargetPlatform="x64">
@@ -415,7 +416,7 @@
             <FlowStep x:Name="__ReferenceID1">
               <sap:WorkflowViewStateService.ViewState>
                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                  <av:Point x:Key="ShapeLocation">190,489</av:Point>
+                  <av:Point x:Key="ShapeLocation">192,739</av:Point>
                   <av:Size x:Key="ShapeSize">216,22</av:Size>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
@@ -434,9 +435,9 @@
     <FlowStep x:Name="__ReferenceID3">
       <sap:WorkflowViewStateService.ViewState>
         <scg:Dictionary x:TypeArguments="x:String, x:Object">
-          <av:Point x:Key="ShapeLocation">190,124.5</av:Point>
+          <av:Point x:Key="ShapeLocation">192,374.5</av:Point>
           <av:Size x:Key="ShapeSize">216,51</av:Size>
-          <av:PointCollection x:Key="ConnectorLocation">298,175.5 298,244.5</av:PointCollection>
+          <av:PointCollection x:Key="ConnectorLocation">300,425.5 300,494.5</av:PointCollection>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
       <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="430,755" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_1" WorkbookPath="OOCL_Container_Tracking.xlsx">
@@ -451,12 +452,12 @@
                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
-              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_1" Result="[Containers]" SheetName="Container" StartingCell="A2" />
-              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_2" Result="[Vessels]" SheetName="Container" StartingCell="B2" />
-              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_3" Result="[Voyages]" SheetName="Container" StartingCell="C2" />
-              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_4" Result="[WorkOrders]" SheetName="Container" StartingCell="D2" />
-              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="314,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_5" Result="[ReferenceNumbers]" SheetName="Container" StartingCell="E2" />
-              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="314,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_6" Result="[BOLNumbers]" SheetName="Container" StartingCell="F2" />
+              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_1" Result="[Containers]" SheetName="Sheet1" StartingCell="A2" />
+              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_2" Result="[Vessels]" SheetName="Sheet1" StartingCell="B2" />
+              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_3" Result="[Voyages]" SheetName="Sheet1" StartingCell="C2" />
+              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_4" Result="[WorkOrders]" SheetName="Sheet1" StartingCell="E2" />
+              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_5" Result="[ReferenceNumbers]" SheetName="Sheet1" StartingCell="F2" />
+              <ui:ExcelReadColumn DisplayName="Read Column" sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="ExcelReadColumn_6" Result="[BOLNumbers]" SheetName="Sheet1" StartingCell="G2" />
             </Sequence>
           </ActivityAction>
         </ui:ExcelApplicationScope.Body>
@@ -473,5 +474,46 @@
     </FlowStep>
     <x:Reference>__ReferenceID1</x:Reference>
     <x:Reference>__ReferenceID2</x:Reference>
+    <FlowStep x:Name="__ReferenceID4">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <av:Point x:Key="ShapeLocation">182,254.5</av:Point>
+          <av:Size x:Key="ShapeSize">216,51</av:Size>
+          <av:PointCollection x:Key="ConnectorLocation">290,305.5 290,335.5 300,335.5 300,374.5</av:PointCollection>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="If_5">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+        <If.Else>
+          <TerminateWorkflow DisplayName="Private: Terminate Workflow" sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="TerminateWorkflow_1" Reason="no file" />
+        </If.Else>
+      </If>
+      <FlowStep.Next>
+        <x:Reference>__ReferenceID3</x:Reference>
+      </FlowStep.Next>
+    </FlowStep>
+    <FlowStep x:Name="__ReferenceID5">
+      <sap:WorkflowViewStateService.ViewState>
+        <scg:Dictionary x:TypeArguments="x:String, x:Object">
+          <av:Point x:Key="ShapeLocation">182,117.5</av:Point>
+          <av:Size x:Key="ShapeSize">216,51</av:Size>
+          <av:PointCollection x:Key="ConnectorLocation">290,168.5 290,254.5</av:PointCollection>
+        </scg:Dictionary>
+      </sap:WorkflowViewStateService.ViewState>
+      <ui:PathExists DisplayName="Path Exists" Exists="[fileExists]" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="PathExists_2" Path="OOCL_Container_Tracking.xlsx" PathType="File">
+        <sap:WorkflowViewStateService.ViewState>
+          <scg:Dictionary x:TypeArguments="x:String, x:Object">
+            <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+          </scg:Dictionary>
+        </sap:WorkflowViewStateService.ViewState>
+      </ui:PathExists>
+      <FlowStep.Next>
+        <x:Reference>__ReferenceID4</x:Reference>
+      </FlowStep.Next>
+    </FlowStep>
   </Flowchart>
 </Activity>

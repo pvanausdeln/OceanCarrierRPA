@@ -17,4 +17,4 @@ if r.status_code == 200:
 os.system("python containerCarrierMapping.py")
 
 #Add the path to UiRobot.exe as an env variable before executing the below command
-#os.system(r".\\ExecuteRobot.bat")
+os.system(r".\\ExecuteRobot.bat")
