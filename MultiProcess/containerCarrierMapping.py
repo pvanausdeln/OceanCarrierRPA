@@ -11,13 +11,22 @@ mapping = {
     "MISC": "MISC"
 }
 
+TIMESTAMP_FILE = "Timestamps.xlsx"
+
 carrier_prefixes = list( mapping.keys() )
 
 # df = dataframe. object class used by pandas to represent a matrix
 df = pd.read_excel("Container_Tracking.xlsx") #Change the path to "Container_Tracking.xlsx" if executed individually
-timestamps_df = pd.read_excel("Timestamps.xlsx")
+timestamps_df = pd.read_excel(TIMESTAMP_FILE)
 df = pd.merge(df, timestamps_df, left_on="unitid", right_on="unitid")
-df.set_index('unitid')
+
+# clears containers in timestamp.xlsx that are not in container_tracking.xlsx
+new_timestamp_df = timestamps_df[ timestamps_df['unitid'].isin(df['unitid']) ]
+new_timestamp_df.set_index('unitid', inplace=True)
+if( os.path.exists(TIMESTAMP_FILE) ):
+    os.remove(TIMESTAMP_FILE)
+new_timestamp_df.to_excel(TIMESTAMP_FILE)
+
 # grabs only unique carrier names
 carriers = df.carrier.unique()
 excels = {}
@@ -38,6 +47,7 @@ for carrier in carriers:
     except Exception as e:
         print(e)
         print("COULD NOT FIND CARRIER FOR " + carrier)
+        carrier_prefix = "MISC"
 
     # creates the prefix filename. CHANGE this for additional paths.
     filename = mapping[carrier_prefix] + "_Container_Tracking.xlsx" #Remove the ".\\..\\" if executed individually
