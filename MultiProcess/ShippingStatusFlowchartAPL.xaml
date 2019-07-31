@@ -111,14 +111,14 @@
               <av:Size x:Key="ShapeSize">216,51</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="480,808" sap2010:WorkflowViewState.IdRef="If_3">
+          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="729,5106" sap2010:WorkflowViewState.IdRef="If_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <Sequence sap:VirtualizedContainerService.HintSize="254,660" sap2010:WorkflowViewState.IdRef="Sequence_14">
+              <Sequence sap:VirtualizedContainerService.HintSize="588,4958" sap2010:WorkflowViewState.IdRef="Sequence_14">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="sd:DataTable" Name="TSTable" />
                   <Variable x:TypeArguments="x:Int32" Name="IDIndex" />
@@ -128,7 +128,7 @@
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                   </scg:Dictionary>
                 </sap:WorkflowViewStateService.ViewState>
-                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" WorkbookPath="APL_Container_Tracking.xlsx">
+                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="550,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_2" WorkbookPath="APL_Container_Tracking.xlsx">
                   <ui:ExcelApplicationScope.Body>
                     <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                       <ActivityAction.Argument>
@@ -156,7 +156,7 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ExcelApplicationScope>
-                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3" WorkbookPath="Timestamps.xlsx">
+                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="550,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_3" WorkbookPath="Timestamps.xlsx">
                   <ui:ExcelApplicationScope.Body>
                     <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                       <ActivityAction.Argument>
@@ -185,7 +185,7 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ExcelApplicationScope>
-                <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="OpenBrowser_2" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.apl.com/ebusiness/tracking">
+                <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="550,51" sap2010:WorkflowViewState.IdRef="OpenBrowser_2" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.apl.com/ebusiness/tracking">
                   <ui:OpenBrowser.Body>
                     <ActivityAction x:TypeArguments="x:Object">
                       <ActivityAction.Argument>
@@ -462,12 +462,12 @@
                   </ui:ForEach.Body>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ForEach>
-                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_4" WorkbookPath="Timestamps.xlsx">
+                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="550,288" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_4" WorkbookPath="Timestamps.xlsx">
                   <ui:ExcelApplicationScope.Body>
                     <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                       <ActivityAction.Argument>
@@ -485,12 +485,12 @@
                   </ui:ExcelApplicationScope.Body>
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
-                      <x:Boolean x:Key="IsExpanded">False</x:Boolean>
+                      <x:Boolean x:Key="IsExpanded">True</x:Boolean>
                       <x:Boolean x:Key="IsPinned">False</x:Boolean>
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ExcelApplicationScope>
-                <p:PythonScope DisplayName="Python Scope" sap:VirtualizedContainerService.HintSize="216,51" sap2010:WorkflowViewState.IdRef="PythonScope_2" Path="C:\Python36" TargetPlatform="x64">
+                <p:PythonScope DisplayName="Python Scope" sap:VirtualizedContainerService.HintSize="550,51" sap2010:WorkflowViewState.IdRef="PythonScope_2" Path="C:\Python36" TargetPlatform="x64">
                   <p:PythonScope.Body>
                     <ActivityAction x:TypeArguments="x:Object">
                       <ActivityAction.Argument>
@@ -514,7 +514,7 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </p:PythonScope>
-                <ui:CloseTab Browser="[chrome]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="CloseTab_2">
+                <ui:CloseTab Browser="[chrome]" DisplayName="Close Tab" sap:VirtualizedContainerService.HintSize="550,22" sap2010:WorkflowViewState.IdRef="CloseTab_2">
                   <sap:WorkflowViewStateService.ViewState>
                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
