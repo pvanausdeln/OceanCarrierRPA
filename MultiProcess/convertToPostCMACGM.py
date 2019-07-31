@@ -74,30 +74,38 @@ class baseInfo:
     }
 
 def CMACGMEventTranslate(event):
-    if(event.find("Loaded") != -1 or event.find("Transshipment Loaded") != -1):
+    if(event.find("Loaded on board") != -1):
         return ("Loaded on Vessel", "AE")
-    elif(event.find("Carrier Release") != -1):
-        return ("Carrier Release", "CR")
-    elif(event.find("Customs Release") != -1):
-        return ("Customs Release", "CT")
-    elif(event.find("Transshipment Discharged") != -1):
+    elif(event.find("Discharged in transhipment") != -1):
         return ("Unloaded from Vessel", "UV")
-    elif(event.find("Gate Out Full") != -1):
-        return ("Outgate Load", "OL")
-    elif(event.find("Empty to shipper") != -1):
-        return ("Empty Equipment Dispatched", "EE")
+    elif(event.find("Ready to be loaded") != -1):
+        return ("Prepared for Loading", "PRE")
+    elif(event.find("Departure") != -1):
+        return ("Vessel Departure", "VD")
+    elif(event.find("Discharge") != -1):
+        return ("Unloaded from Vessel", "UV")
+    elif(event.find("Arrival final point") != -1):
+        return ("Vessel Arrival", "VA")
+    elif(event.find("Received for ") != -1):
+        return ("Received", "R")
     elif(event.find("Empty in Container Yard") != -1):
         return ("Return Container", "RD")
     elif(event.find("Gate In Full") != -1):
         return ("Ingate Load", "I")
-    elif(event.find("Loaded on Rail") != -1):
-        return ("LOADED_ON_RAIL", "AL")
+    elif(event.find("Full Load on rail") != -1):
+        return ("Loaded on Rail", "AL")
+    elif(event.find("Container in transit ") != -1 or event.find("Container on rail for export") != -1):
+        return ("In Transit", "IT")
     elif(event.find("Rail departed Origin") != -1):
         return ("RAIL_DEPARTURE", "RL")
-    elif(event.find("Arrived at rail ramp") != -1):
-        return ("RAIL_ARRIVAL", "AR")
-    elif(event.find("Unloaded from Rail") != -1):
-        return ("UNLOADED_FROM_RAIL", "UR")
+    elif(event.find("Train arrival for export") != -1):
+        return ("Rail Arrival at Destination Intermodal Ramp", "AR")
+    elif(event.find("Export unload full from Rail") != -1):
+        return ("Unloaded from a rail car", "UR")
+    elif(event.find("Container to consignee") != -1):
+        return ("Arrived at Delivery Location", "X1")
+    elif(event.find("Empty in depot") != -1):
+        return ("Return Container", "RD")
     return (None, None)
 
 
