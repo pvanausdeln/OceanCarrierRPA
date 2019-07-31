@@ -111,7 +111,6 @@ def APLEventTranslate(event):
 
 
 def APLPost(container, path):
-    print(os.path.isfile(path+"ContainerInformation\\"+ container + ".csv"), path+"ContainerInformation\\"+ container + ".csv")
     if(os.path.isfile(path+"ContainerInformation\\"+ container + ".csv")):
         with open(path+"ContainerInformation\\"+ container +".csv") as containerInfo:
             reader = csv.reader(containerInfo)
@@ -144,11 +143,12 @@ def APLPost(container, path):
     return
 
 
-def main(container, cwd):
+def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
         path+=x+"\\\\"
-    APLPost(container, path)
+    for container in containerList:
+        APLPost(container, path)
 
 
 
