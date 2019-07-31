@@ -9,7 +9,7 @@ import csv
 import string
 
 class baseInfo:
-    postURL = "https://demo-apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
+    postURL = "https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
 
     shipmentEventBase = {
     "associatedAssetSize": None,
