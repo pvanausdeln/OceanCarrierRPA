@@ -106,6 +106,8 @@ def APLEventTranslate(event):
         return ("Arrived at Delivery Location", "X1")
     elif(event.find("Empty in depot") != -1):
         return ("Return Container", "RD")
+    elif(event.find("Empty to shipper") != -1):
+        return ("Empty Equipment Dispatched", "EE")
     return (None, None)
 
 
