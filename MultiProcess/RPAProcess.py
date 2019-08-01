@@ -14,8 +14,8 @@ mapping = {
     "MISC": "MISC"
 }
 
-if(os.path.exists(r"C:\\Users\\sowrab.iyengar\\Documents\\OceanCarrierRPA\\MultiProcess\\Container_Tracking.xlsx")): # replace with correct filepath
-    os.remove(r"C:\\Users\\sowrab.iyengar\\Documents\\OceanCarrierRPA\\MultiProcess\\Container_Tracking.xlsx") # replace with correct filepath
+if(os.path.exists(r"Container_Tracking.xlsx")): # replace with correct filepath
+    os.remove(r"Container_Tracking.xlsx") # replace with correct filepath
 
 url = 'https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/vessel/track'
 filename = 'Container_Tracking.xlsx'
@@ -36,7 +36,11 @@ carrier_prefixes = list( mapping.keys() )
 # df = dataframe. object class used by pandas to represent a matrix
 df = pd.read_excel("Container_Tracking.xlsx") #Change the path to "Container_Tracking.xlsx" if executed individually
 timestamps_df = pd.read_excel(TIMESTAMP_FILE)
-df = pd.merge(df, timestamps_df, left_on="unitid", right_on="unitid")
+
+# left join container_tracking.xlsx with timestamp.xlsx
+df = pd.merge(df, timestamps_df, left_on="unitid", right_on="unitid", how="left")
+# if there are new containers, fill timestamp with 0
+df.fillna(value={'timestamp':0}, inplace=True)
 
 # clears containers in timestamp.xlsx that are not in container_tracking.xlsx
 new_timestamp_df = timestamps_df[ timestamps_df['unitid'].isin(df['unitid']) ]
