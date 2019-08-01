@@ -3,6 +3,7 @@ import os
 import subprocess
 import pandas as pd
 from difflib import get_close_matches
+import sys
 
 mapping = {
     "ONE" : "ONE",
@@ -24,6 +25,15 @@ r = requests.get(url, stream=True)
 if r.status_code == 200:
     with open(filename, 'wb') as f:
         f.write(r.content)
+
+if(sys.argv[1] == "RESET"):
+    df = pd.read_excel(filename)
+    new_df = pd.DataFrame(columns=['unitid','timestamp'])
+    new_df['unitid'] = df['unitid']
+    new_df['timestamp'] = 0
+    new_df.set_index('unitid', inplace=True)
+    new_df.to_excel("Timestamps.xlsx")
+    exit(0)
 
 TIMESTAMP_FILE = "Timestamps.xlsx"
 
