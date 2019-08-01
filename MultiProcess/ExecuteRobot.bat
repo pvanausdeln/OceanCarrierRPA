@@ -1,5 +1,15 @@
-::Directory of the UiPathRobot.exe file
-cd C:\Users\pvanausdeln\AppData\Local\UiPath\app-19.7.0
+::The below runs the RPAProcess.py script
 
-::Command line instruction to run the desired xaml file
-UiRobot.exe -file "C:\Users\pvanausdeln\OneDrive - Blume Global\UiPath\OceanCarrierRPA\MultiProcess\OceanCarrierRPAWithNames.xaml"
+python RPAProcess.py
+
+::The below command will run the containerCarrierMapping.py
+
+python containerCarrierMapping.py
+
+::Change directory to where UiRobot.exe is located
+
+cd C:\Users\sowrab.iyengar\AppData\Local\UiPath\app-19.7.0
+
+::Run the UiRobot.exe with the file name as an argument, also change directory to your xaml file 
+
+UiRobot.exe -file C:\Users\sowrab.iyengar\Documents\OceanCarrierRPA\MultiProcess\OceanCarrierRPAWithNames.xaml
