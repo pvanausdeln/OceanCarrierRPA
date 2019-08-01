@@ -5,14 +5,14 @@ python RPAProcess.py
 
 ::Change directory to where UiRobot.exe is located
 
-cd C:\Users\sowrab.iyengar\AppData\Local\UiPath\app-19.7.0
+cd %USERPROFILE%\AppData\Local\UiPath\app-19.7.0
 
 ::Run the UiRobot.exe with the file name as an argument, also change directory to your xaml file 
 
-UiRobot.exe -file C:\Users\sowrab.iyengar\Documents\OceanCarrierRPA\MultiProcess\OceanCarrierRPAWithNames.xaml
+UiRobot.exe -file "%USERPROFILE%\OneDrive - Blume Global\UiPath\OceanCarrierRPA\MultiProcess\OceanCarrierRPAWithNames.xaml"
 
 ::Change directory back to "Multiprocess" folder
-cd C:\Users\sowrab.iyengar\Documents\OceanCarrierRPA\MultiProcess
+cd "%USERPROFILE%\OneDrive - Blume Global\UiPath\OceanCarrierRPA\MultiProcess"
 
 ::Run it after an hour again
 
