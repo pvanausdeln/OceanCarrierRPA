@@ -3,10 +3,6 @@
 
 python RPAProcess.py
 
-::The below command will run the containerCarrierMapping.py
-
-python containerCarrierMapping.py
-
 ::Change directory to where UiRobot.exe is located
 
 cd C:\Users\sowrab.iyengar\AppData\Local\UiPath\app-19.7.0
