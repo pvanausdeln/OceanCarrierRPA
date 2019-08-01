@@ -8,6 +8,7 @@ mapping = {
     "APL" : "APL",
     "CGM" : "CGM",
     "OC2" : "OOCL",
+    "OOCL": "OOCL",
     "MISC": "MISC"
 }
 
