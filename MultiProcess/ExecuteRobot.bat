@@ -4,6 +4,7 @@
 python RPAProcess.py
 
 ::Change directory to where UiRobot.exe is located
+pushd .
 
 cd %USERPROFILE%\AppData\Local\UiPath\app-19.7.0
 
@@ -12,7 +13,7 @@ cd %USERPROFILE%\AppData\Local\UiPath\app-19.7.0
 UiRobot.exe -file "%USERPROFILE%\OneDrive - Blume Global\UiPath\OceanCarrierRPA\MultiProcess\OceanCarrierRPAWithNames.xaml"
 
 ::Change directory back to "Multiprocess" folder
-cd "%USERPROFILE%\OneDrive - Blume Global\UiPath\OceanCarrierRPA\MultiProcess"
+popd
 
 ::Run it after an hour again
 
