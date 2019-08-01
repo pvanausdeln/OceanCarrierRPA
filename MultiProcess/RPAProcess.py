@@ -25,10 +25,6 @@ if r.status_code == 200:
     with open(filename, 'wb') as f:
         f.write(r.content)
 
-# os.system("python containerCarrierMapping.py")
-#
-# #Add the path to UiRobot.exe as an env variable before executing the below command
-# os.system(r".\\ExecuteRobot.bat")
 TIMESTAMP_FILE = "Timestamps.xlsx"
 
 carrier_prefixes = list( mapping.keys() )
