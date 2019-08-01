@@ -2,8 +2,8 @@ import requests
 import os
 import pandas as pd
 
-if(os.path.exists(r"C:\\Users\\alston.huang\\OneDrive - Blume Global\\UiPath\\OceanCarrierRPA\\Multiprocess\\Container_Tracking.xlsx")): # replace with correct filepath
-    os.remove(r"C:\\Users\\alston.huang\\OneDrive - Blume Global\\UiPath\\OceanCarrierRPA\\Multiprocess\\Container_Tracking.xlsx") # replace with correct filepath
+if(os.path.exists("Container_Tracking.xlsx")): # replace with correct filepath
+    os.remove("Container_Tracking.xlsx") # replace with correct filepath
 
 url = 'https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/vessel/track'
 filename = 'Container_Tracking.xlsx'
