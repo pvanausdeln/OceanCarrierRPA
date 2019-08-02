@@ -26,6 +26,7 @@ if r.status_code == 200:
     with open(filename, 'wb') as f:
         f.write(r.content)
 
+# create Timestamp.xlsx
 if(len(sys.argv) > 1 and sys.argv[1] == "RESET"):
     df = pd.read_excel(filename)
     new_df = pd.DataFrame(columns=['unitid','timestamp'])
@@ -47,11 +48,14 @@ df = pd.merge(df, timestamps_df, left_on="unitid", right_on="unitid", how="left"
 # if there are new containers, fill timestamp with 0
 df.fillna(value={'timestamp':0}, inplace=True)
 
+# if there are containers in Timestamp.xlsx that are not in Container_tracking.xlsx
 # clears containers in timestamp.xlsx that are not in container_tracking.xlsx
 new_timestamp_df = timestamps_df[ timestamps_df['unitid'].isin(df['unitid']) ]
 new_timestamp_df.set_index('unitid', inplace=True)
 if( os.path.exists(TIMESTAMP_FILE) ):
     os.remove(TIMESTAMP_FILE)
+# fill empty or NaN values in timestamp column to 0
+new_timestamp_df.fillna(value={'timestamp':0}, inplace=True)
 new_timestamp_df.to_excel(TIMESTAMP_FILE)
 
 # grabs only unique carrier names
