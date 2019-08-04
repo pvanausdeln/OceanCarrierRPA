@@ -7,11 +7,16 @@ import sys
 
 mapping = {
     "ONE" : "ONE",
+	"ONEY":"ONE",
     "EVE" : "EVERGREEN",
+	"EISU":"EVERGREEN",
     "APL" : "APL",
+	"APLU":"APL",
     "CGM" : "CGM",
+	"CDMU":"CGM",
     "OC2" : "OOCL",
     "OOCL": "OOCL",
+	"OOLU":"OOCL",
     "MISC": "MISC"
 }
 
