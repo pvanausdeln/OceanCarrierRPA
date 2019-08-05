@@ -7,9 +7,10 @@ import datetime
 import glob
 import csv
 import string
+import re
 
 class baseInfo:
-    postURL = "https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
+    postURL = "https://apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
 
     shipmentEventBase = {
     "associatedAssetSize": None,
@@ -113,8 +114,9 @@ def CMACGMEventTranslate(event):
 
 
 def CMACGMPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
+	
+    if(os.path.isfile(path+"ContainerInformation\\"+str(re.split("[^\w\d]", container)[0])+".csv")):
+        with open(path+"ContainerInformation\\"+str(re.split("[^\w\d]", container)[0])+".csv") as containerInfo:
             reader = csv.reader(containerInfo)
             next(reader)
 
@@ -145,6 +147,7 @@ def CMACGMPost(container, path):
     return
 
 def testMain(container): #test main
+	
     fileList = glob.glob(os.getcwd() + "\\ContainerInformation\\"+container+".csv", recursive = True) #get all the json steps
     if (not fileList):
         return
