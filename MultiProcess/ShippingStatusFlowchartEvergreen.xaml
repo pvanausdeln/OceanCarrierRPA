@@ -93,14 +93,14 @@
           <av:Size x:Key="ShapeSize">216,51</av:Size>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="938,6740" sap2010:WorkflowViewState.IdRef="If_4">
+      <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="938,6779" sap2010:WorkflowViewState.IdRef="If_4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <If.Then>
-          <Sequence sap:VirtualizedContainerService.HintSize="797,6592" sap2010:WorkflowViewState.IdRef="Sequence_10">
+          <Sequence sap:VirtualizedContainerService.HintSize="797,6631" sap2010:WorkflowViewState.IdRef="Sequence_10">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -141,13 +141,13 @@
                 </InArgument>
               </ui:ReadRange.Range>
             </ui:ReadRange>
-            <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="759,6036" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.shipmentlink.com/servlet/TDB1_CargoTracking.do">
+            <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="759,6075" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.shipmentlink.com/servlet/TDB1_CargoTracking.do">
               <ui:OpenBrowser.Body>
                 <ActivityAction x:TypeArguments="x:Object">
                   <ActivityAction.Argument>
                     <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
                   </ActivityAction.Argument>
-                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="729,5937" sap2010:WorkflowViewState.IdRef="Sequence_8">
+                  <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="729,5976" sap2010:WorkflowViewState.IdRef="Sequence_8">
                     <Sequence.Variables>
                       <Variable x:TypeArguments="x:Int32" Name="index" />
                     </Sequence.Variables>
@@ -171,13 +171,13 @@
                         <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a2ddca0119a502708112449062b37782" Selector="&lt;webctrl name='SEL' parentid='quick' tableRow='2' tag='INPUT' /&gt;" WaitForReady="INTERACTIVE" />
                       </ui:Click.Target>
                     </ui:Click>
-                    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="691,5699" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
+                    <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[index]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="691,5738" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
                       <ui:ForEach.Body>
                         <ActivityAction x:TypeArguments="x:Object">
                           <ActivityAction.Argument>
                             <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
                           </ActivityAction.Argument>
-                          <Sequence sap:VirtualizedContainerService.HintSize="659,5566" sap2010:WorkflowViewState.IdRef="Sequence_7">
+                          <Sequence sap:VirtualizedContainerService.HintSize="659,5605" sap2010:WorkflowViewState.IdRef="Sequence_7">
                             <Sequence.Variables>
                               <Variable x:TypeArguments="x:Boolean" Name="pathExists" />
                               <Variable x:TypeArguments="x:Int32" Name="ind" />
@@ -212,7 +212,7 @@
                                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3d8c164c3401ba5fd4723d4a5dc0005e" Selector="&lt;webctrl tag='INPUT' idx='17' /&gt;" WaitForReady="INTERACTIVE" />
                               </ui:TypeInto.Target>
                             </ui:TypeInto>
-                            <While sap:VirtualizedContainerService.HintSize="621,2267" sap2010:WorkflowViewState.IdRef="While_2">
+                            <While sap:VirtualizedContainerService.HintSize="621,2306" sap2010:WorkflowViewState.IdRef="While_2">
                               <sap:WorkflowViewStateService.ViewState>
                                 <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                   <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -220,7 +220,7 @@
                                 </scg:Dictionary>
                               </sap:WorkflowViewStateService.ViewState>
                               <While.Condition>[not notvalid_num and not valid]</While.Condition>
-                              <Sequence sap:VirtualizedContainerService.HintSize="518,2110" sap2010:WorkflowViewState.IdRef="Sequence_3">
+                              <Sequence sap:VirtualizedContainerService.HintSize="518,2149" sap2010:WorkflowViewState.IdRef="Sequence_3">
                                 <Sequence.Variables>
                                   <Variable x:TypeArguments="x:Boolean" Name="badChars" />
                                 </Sequence.Variables>
@@ -259,7 +259,7 @@
                                     <InArgument x:TypeArguments="x:Boolean">[captcha.Contains("J") or captcha.Contains("I") or captcha.Contains("C") or captcha.Contains("G") or captcha.Contains("l") or captcha.Any(function(x) NOT char.IsLetter(x)) or captcha.Length &lt; 4 or captcha.Contains("O") or captcha.Contains("Z") or captcha.Contains("W")]</InArgument>
                                   </Assign.Value>
                                 </Assign>
-                                <While sap:VirtualizedContainerService.HintSize="480,724" sap2010:WorkflowViewState.IdRef="While_1">
+                                <While sap:VirtualizedContainerService.HintSize="480,725" sap2010:WorkflowViewState.IdRef="While_1">
                                   <sap:WorkflowViewStateService.ViewState>
                                     <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                       <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -267,7 +267,7 @@
                                     </scg:Dictionary>
                                   </sap:WorkflowViewStateService.ViewState>
                                   <While.Condition>[badChars = True]</While.Condition>
-                                  <Sequence sap:VirtualizedContainerService.HintSize="368,567" sap2010:WorkflowViewState.IdRef="Sequence_2">
+                                  <Sequence sap:VirtualizedContainerService.HintSize="368,568" sap2010:WorkflowViewState.IdRef="Sequence_2">
                                     <sap:WorkflowViewStateService.ViewState>
                                       <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                         <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -306,7 +306,7 @@
                                         <OutArgument x:TypeArguments="x:String">[captcha]</OutArgument>
                                       </ui:GetOCRText.Text>
                                     </ui:GetOCRText>
-                                    <Assign sap:VirtualizedContainerService.HintSize="330,59" sap2010:WorkflowViewState.IdRef="Assign_2">
+                                    <Assign sap:VirtualizedContainerService.HintSize="330,60" sap2010:WorkflowViewState.IdRef="Assign_2">
                                       <Assign.To>
                                         <OutArgument x:TypeArguments="x:Boolean">[badChars]</OutArgument>
                                       </Assign.To>
@@ -337,9 +337,9 @@
                                   </ui:Click.Target>
                                 </ui:Click>
                                 <Delay Duration="00:00:01" sap:VirtualizedContainerService.HintSize="480,22" sap2010:WorkflowViewState.IdRef="Delay_2" />
-                                <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey" EmptyField="False" sap:VirtualizedContainerService.HintSize="480,116" sap2010:WorkflowViewState.IdRef="SendHotkey_2" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
+                                <ui:SendHotkey DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Send Hotkey 'chrome.exe Chrome'" EmptyField="False" sap:VirtualizedContainerService.HintSize="480,154" sap2010:WorkflowViewState.IdRef="SendHotkey_2" Key="enter" KeyModifiers="None" SendWindowMessages="False" SpecialKey="True">
                                   <ui:SendHotkey.Target>
-                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" WaitForReady="INTERACTIVE" />
+                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" Selector="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="23c2fa73bc31d0c0d8214778e8048d55" WaitForReady="INTERACTIVE" />
                                   </ui:SendHotkey.Target>
                                 </ui:SendHotkey>
                                 <ui:UiElementExists DisplayName="Element Exists 'TD'" Exists="[notvalid_num]" sap:VirtualizedContainerService.HintSize="480,106" sap2010:WorkflowViewState.IdRef="UiElementExists_1">
@@ -354,12 +354,12 @@
                                 </ui:UiElementExists>
                               </Sequence>
                             </While>
-                            <ui:UiElementExists DisplayName="Element Exists 'TD'" Exists="[elementExists]" sap:VirtualizedContainerService.HintSize="560,106" sap2010:WorkflowViewState.IdRef="UiElementExists_3">
+                            <ui:UiElementExists DisplayName="Element Exists 'TD'" Exists="[elementExists]" sap:VirtualizedContainerService.HintSize="621,106" sap2010:WorkflowViewState.IdRef="UiElementExists_3">
                               <ui:UiElementExists.Target>
                                 <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="e0719e61025de51b38a78b5c7392bb0f" Selector="&lt;webctrl css-selector='body&amp;gt;div&amp;gt;div&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table' idx='2' tag='TABLE' /&gt;&lt;webctrl tag='TD' class='f12wrdb1' css-selector='body&amp;gt;div&amp;gt;div&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td&amp;gt;table&amp;gt;tbody&amp;gt;tr&amp;gt;td' innertext='                             No information on Container No, please enter a valid Container No. or trace by B/L No. again.                             ' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
                               </ui:UiElementExists.Target>
                             </ui:UiElementExists>
-                            <If Condition="[elementExists]" sap:VirtualizedContainerService.HintSize="560,361" sap2010:WorkflowViewState.IdRef="If_5">
+                            <If Condition="[elementExists]" sap:VirtualizedContainerService.HintSize="621,361" sap2010:WorkflowViewState.IdRef="If_5">
                               <If.Then>
                                 <Sequence sap:VirtualizedContainerService.HintSize="296,214" sap2010:WorkflowViewState.IdRef="Sequence_12">
                                   <sap:WorkflowViewStateService.ViewState>
