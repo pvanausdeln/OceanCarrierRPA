@@ -392,8 +392,8 @@
                             <ui:CreateDirectory ContinueOnError="{x:Null}" DisplayName="Create Directory" sap:VirtualizedContainerService.HintSize="216,22" sap2010:WorkflowViewState.IdRef="CreateDirectory_2" Path="./ContainerInformation/" />
                           </If.Else>
                         </If>
-                        <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[ExtractDataTable]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;./ContainerInformation/&quot; + item.ToString + &quot;.csv&quot;]" sap:VirtualizedContainerService.HintSize="480,87" sap2010:WorkflowViewState.IdRef="WriteCsvFile_2" />
-                        <Assign sap:VirtualizedContainerService.HintSize="480,60" sap2010:WorkflowViewState.IdRef="Assign_12">
+                        <ui:WriteCsvFile Encoding="{x:Null}" AddHeaders="True" DataTable="[ExtractDataTable]" Delimitator="Comma" DisplayName="Write CSV" FilePath="[&quot;./ContainerInformation/&quot; + System.Text.RegularExpressions.Regex.Split(item.ToString, &quot;[^\w\d]&quot;)(0) + &quot;.csv&quot;]" sap:VirtualizedContainerService.HintSize="621,87" sap2010:WorkflowViewState.IdRef="WriteCsvFile_2" />
+                        <Assign sap:VirtualizedContainerService.HintSize="621,60" sap2010:WorkflowViewState.IdRef="Assign_12">
                           <Assign.To>
                             <OutArgument x:TypeArguments="x:Int32">[index]</OutArgument>
                           </Assign.To>
@@ -401,7 +401,7 @@
                             <InArgument x:TypeArguments="x:Int32">[index + 1]</InArgument>
                           </Assign.Value>
                         </Assign>
-                        <ui:GoBack Browser="[chrome]" DisplayName="Go Back" sap:VirtualizedContainerService.HintSize="480,22" sap2010:WorkflowViewState.IdRef="GoBack_4" />
+                        <ui:GoBack Browser="[chrome]" DisplayName="Go Back" sap:VirtualizedContainerService.HintSize="621,22" sap2010:WorkflowViewState.IdRef="GoBack_4" />
                       </Sequence>
                     </ActivityAction>
                   </ui:ForEach.Body>
@@ -412,7 +412,7 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ForEach>
-                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="550,288" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_4" WorkbookPath="Timestamps.xlsx">
+                <ui:ExcelApplicationScope Password="{x:Null}" DisplayName="Excel Application Scope" sap:VirtualizedContainerService.HintSize="691,288" sap2010:WorkflowViewState.IdRef="ExcelApplicationScope_4" WorkbookPath="Timestamps.xlsx">
                   <ui:ExcelApplicationScope.Body>
                     <ActivityAction x:TypeArguments="ui:WorkbookApplication">
                       <ActivityAction.Argument>
