@@ -99,6 +99,14 @@ def ONECodeToName(code):
         return "Unloaded From Vessel"
     elif(code == "OA"):
         return "OUTGATE"
+    elif(code == "RL"):
+        return "Rail Departure"
+    elif(code == "AR"):
+        return "Rail Arrival"
+    elif(code == "AL"):
+        return "Loaded on Rail"
+    elif(code == "UR"):
+        return "Unloaded from Rail"
     return None
 
 def ONEEventTranslate(event):
