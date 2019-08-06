@@ -79,7 +79,11 @@ class baseInfo:
         "Departure from Port of Loading\n": "VD",
         "Arrival at Port of Discharging\n": "VA",
         " at Port of Discharging\n": "UV",
-        "Gate Out from Inbound Terminal": "OA"
+        "Gate Out from Inbound Terminal": "OA",
+        "Rail Departure": "RL",
+        "Rail Arrival": "AR",
+        "Loaded on rail": "AL",
+        "Unloaded from rail": "UR"
     }
 
 def ONECodeToName(code):
