@@ -121,8 +121,6 @@ def ONEPost(container, path):
                 postJson["eventTime"] = datetime.datetime.strptime(" ".join(row[3].strip().split(" ")[1:]), '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
                 postJson["vessel"] = row[4]
                 postJson["voyageNumber"] = row[5]
-                postJson["workOrderNumber"] = row[6]
-                postJson["billOfLadingNumber"] = row[7]
                 postJson["eventCode"], postJson["eventName"] = ONEEventTranslate(row[1])
                 postJson["resolvedEventSource"] = "ONE RPA"
                 postJson["codeType"] = "UNLOCODE"

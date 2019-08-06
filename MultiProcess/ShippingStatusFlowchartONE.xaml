@@ -109,14 +109,14 @@
               <av:Size x:Key="ShapeSize">216,51</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="938,5720" sap2010:WorkflowViewState.IdRef="If_6">
+          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="938,6555" sap2010:WorkflowViewState.IdRef="If_6">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <Sequence sap:VirtualizedContainerService.HintSize="797,5572" sap2010:WorkflowViewState.IdRef="Sequence_53">
+              <Sequence sap:VirtualizedContainerService.HintSize="797,6407" sap2010:WorkflowViewState.IdRef="Sequence_53">
                 <sap:WorkflowViewStateService.ViewState>
                   <scg:Dictionary x:TypeArguments="x:String, x:Object">
                     <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -164,13 +164,13 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ReadRange>
-                <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="759,4856" sap2010:WorkflowViewState.IdRef="OpenBrowser_2" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://ecomm.one-line.com/ecom/CUP_HOM_3301.do?sessLocale=&amp;staticUrl=">
+                <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="759,5691" sap2010:WorkflowViewState.IdRef="OpenBrowser_2" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://ecomm.one-line.com/ecom/CUP_HOM_3301.do?sessLocale=&amp;staticUrl=">
                   <ui:OpenBrowser.Body>
                     <ActivityAction x:TypeArguments="x:Object">
                       <ActivityAction.Argument>
                         <DelegateInArgument x:TypeArguments="x:Object" Name="ContextTarget" />
                       </ActivityAction.Argument>
-                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="729,4757" sap2010:WorkflowViewState.IdRef="Sequence_51">
+                      <Sequence DisplayName="Do" sap:VirtualizedContainerService.HintSize="729,5592" sap2010:WorkflowViewState.IdRef="Sequence_51">
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -189,13 +189,13 @@
                             <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3dc08ef1e3840528bfaf8c0af04e573f" Selector="&lt;webctrl tag='SELECT' /&gt;" WaitForReady="INTERACTIVE" />
                           </ui:SelectItem.Target>
                         </ui:SelectItem>
-                        <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[containerIndex]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="691,4491" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[Containers]">
+                        <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[containerIndex]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="691,5326" sap2010:WorkflowViewState.IdRef="ForEach`1_3" Values="[Containers]">
                           <ui:ForEach.Body>
                             <ActivityAction x:TypeArguments="x:Object">
                               <ActivityAction.Argument>
                                 <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
                               </ActivityAction.Argument>
-                              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="659,4358" sap2010:WorkflowViewState.IdRef="Sequence_50">
+                              <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="659,5193" sap2010:WorkflowViewState.IdRef="Sequence_50">
                                 <Sequence.Variables>
                                   <Variable x:TypeArguments="x:Boolean" Name="pathExists" />
                                   <Variable x:TypeArguments="x:Boolean" Default="False" Name="elementExists" />
@@ -242,6 +242,60 @@
                                   </ui:Click.Target>
                                 </ui:Click>
                                 <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="621,22" sap2010:WorkflowViewState.IdRef="Delay_3" />
+                                <ui:UiElementExists DisplayName="Element Exists 'SPAN'" Exists="[elementExists]" sap:VirtualizedContainerService.HintSize="621,106" sap2010:WorkflowViewState.IdRef="UiElementExists_3">
+                                  <ui:UiElementExists.Target>
+                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="6110f20386d1983350417d9113aef731" Selector="&lt;webctrl id='captchaImg' tag='IMG' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                  </ui:UiElementExists.Target>
+                                </ui:UiElementExists>
+                                <While sap:VirtualizedContainerService.HintSize="621,973" sap2010:WorkflowViewState.IdRef="While_1" Condition="[elementExists]">
+                                  <Sequence sap:VirtualizedContainerService.HintSize="368,816" sap2010:WorkflowViewState.IdRef="Sequence_55">
+                                    <sap:WorkflowViewStateService.ViewState>
+                                      <scg:Dictionary x:TypeArguments="x:String, x:Object">
+                                        <x:Boolean x:Key="IsExpanded">True</x:Boolean>
+                                      </scg:Dictionary>
+                                    </sap:WorkflowViewStateService.ViewState>
+                                    <ui:GoBack Browser="[chrome]" DisplayName="Go Back" sap:VirtualizedContainerService.HintSize="330,22" sap2010:WorkflowViewState.IdRef="GoBack_2" />
+                                    <ui:SelectItem ContinueOnError="{x:Null}" DelayAfter="{x:Null}" DelayBefore="{x:Null}" DisplayName="Select Item 'SELECT  searchType'" sap:VirtualizedContainerService.HintSize="330,134" sap2010:WorkflowViewState.IdRef="SelectItem_3" Item="Container No.">
+                                      <ui:SelectItem.Items>
+                                        <scg:List x:TypeArguments="x:String" Capacity="4">
+                                          <x:String>BL No. or Booking No.</x:String>
+                                          <x:String>Container No.</x:String>
+                                          <x:String>Purchase Order No.</x:String>
+                                          <x:String>All</x:String>
+                                        </scg:List>
+                                      </ui:SelectItem.Items>
+                                      <ui:SelectItem.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="3dc08ef1e3840528bfaf8c0af04e573f" Selector="&lt;webctrl tag='SELECT' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:SelectItem.Target>
+                                    </ui:SelectItem>
+                                    <ui:TypeInto DelayBefore="{x:Null}" DelayBetweenKeys="{x:Null}" DelayMS="{x:Null}" Activate="True" ClickBeforeTyping="False" DisplayName="Type Into 'TEXTAREA  searchName'" EmptyField="True" sap:VirtualizedContainerService.HintSize="330,134" sap2010:WorkflowViewState.IdRef="TypeInto_4" SendWindowMessages="False" SimulateType="False" Text="[split(item.ToString, &quot;-&quot;)(0)]">
+                                      <ui:TypeInto.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="a507b8f165231ecd8b2bcf506147ee83" Selector="&lt;html app='chrome.exe' title='ONE : Cargo Tracking' /&gt;&lt;webctrl tag='TEXTAREA' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:TypeInto.Target>
+                                    </ui:TypeInto>
+                                    <ui:Click DelayBefore="{x:Null}" DelayMS="{x:Null}" ClickType="CLICK_SINGLE" DisplayName="Click 'BUTTON'" sap:VirtualizedContainerService.HintSize="330,106" sap2010:WorkflowViewState.IdRef="Click_6" KeyModifiers="None" MouseButton="BTN_LEFT" SendWindowMessages="False" SimulateClick="False">
+                                      <ui:Click.CursorPosition>
+                                        <ui:CursorPosition Position="Center">
+                                          <ui:CursorPosition.OffsetX>
+                                            <InArgument x:TypeArguments="x:Int32" />
+                                          </ui:CursorPosition.OffsetX>
+                                          <ui:CursorPosition.OffsetY>
+                                            <InArgument x:TypeArguments="x:Int32" />
+                                          </ui:CursorPosition.OffsetY>
+                                        </ui:CursorPosition>
+                                      </ui:Click.CursorPosition>
+                                      <ui:Click.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" TimeoutMS="{x:Null}" InformativeScreenshot="cddf7bb0196bda4a369ca8e7581b6f37" Selector="&lt;html app='chrome.exe' title='ONE : Cargo Tracking' /&gt;&lt;webctrl id='btnSearch' tag='BUTTON' class='btn_type1 ui-button ui-widget ui-state-default ui-button-text-icon-primary' css-selector='body&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;form&amp;gt;div&amp;gt;div&amp;gt;button' /&gt;" WaitForReady="INTERACTIVE" />
+                                      </ui:Click.Target>
+                                    </ui:Click>
+                                    <Delay Duration="00:00:02" sap:VirtualizedContainerService.HintSize="330,22" sap2010:WorkflowViewState.IdRef="Delay_4" />
+                                    <ui:UiElementExists DisplayName="Element Exists 'SPAN'" Exists="[elementExists]" sap:VirtualizedContainerService.HintSize="330,106" sap2010:WorkflowViewState.IdRef="UiElementExists_4">
+                                      <ui:UiElementExists.Target>
+                                        <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="6110f20386d1983350417d9113aef731" Selector="&lt;webctrl id='captchaImg' tag='IMG' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                      </ui:UiElementExists.Target>
+                                    </ui:UiElementExists>
+                                  </Sequence>
+                                </While>
                                 <ui:UiElementExists DisplayName="Element Exists 'SPAN'" Exists="[elementExists]" sap:VirtualizedContainerService.HintSize="621,106" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
                                   <ui:UiElementExists.Target>
                                     <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="72ab76392e73d8956bdd939ec7b77fc9" Selector="&lt;webctrl id='detail' tag='TABLE' /&gt;&lt;webctrl aaname='No.' tag='TH' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
@@ -328,8 +382,6 @@
                                 </Sequence>
                                 <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="Vessel" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="621,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_14" MaxLength="100" Unique="False" />
                                 <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="voyageNumber" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="621,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_15" MaxLength="100" Unique="False" />
-                                <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="workOrderNumber" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="621,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_16" MaxLength="100" Unique="False" />
-                                <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="billOfLadingNumber" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="621,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_17" MaxLength="100" Unique="False" />
                                 <ui:AddDataColumn x:TypeArguments="x:Object" Column="{x:Null}" DefaultValue="{x:Null}" AllowDBNull="True" AutoIncrement="False" ColumnName="containerID" DataTable="[ExtractDataTable]" DisplayName="Add Data Column" sap:VirtualizedContainerService.HintSize="621,22" sap2010:WorkflowViewState.IdRef="AddDataColumn`1_18" MaxLength="100" Unique="False" />
                                 <Assign sap:VirtualizedContainerService.HintSize="621,60" sap2010:WorkflowViewState.IdRef="Assign_23">
                                   <Assign.To>
@@ -339,13 +391,13 @@
                                     <InArgument x:TypeArguments="x:Int32">0</InArgument>
                                   </Assign.Value>
                                 </Assign>
-                                <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="621,799" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
+                                <ui:ForEachRow CurrentIndex="{x:Null}" DataTable="[ExtractDataTable]" DisplayName="For Each Row" sap:VirtualizedContainerService.HintSize="621,599" sap2010:WorkflowViewState.IdRef="ForEachRow_3">
                                   <ui:ForEachRow.Body>
                                     <ActivityAction x:TypeArguments="sd:DataRow">
                                       <ActivityAction.Argument>
                                         <DelegateInArgument x:TypeArguments="sd:DataRow" Name="row" />
                                       </ActivityAction.Argument>
-                                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="296,652" sap2010:WorkflowViewState.IdRef="Sequence_49">
+                                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="296,452" sap2010:WorkflowViewState.IdRef="Sequence_49">
                                         <sap:WorkflowViewStateService.ViewState>
                                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
                                             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -367,25 +419,9 @@
                                             <InArgument x:TypeArguments="x:Object">[Voyages.ElementAt(containerIndex).ToString]</InArgument>
                                           </Assign.Value>
                                         </Assign>
-                                        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_26">
-                                          <Assign.To>
-                                            <OutArgument x:TypeArguments="x:Object">[ExtractDataTable.Rows(rowindex).Item(6)]</OutArgument>
-                                          </Assign.To>
-                                          <Assign.Value>
-                                            <InArgument x:TypeArguments="x:Object">[WorkOrders.ElementAt(containerIndex).ToString]</InArgument>
-                                          </Assign.Value>
-                                        </Assign>
-                                        <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_27">
-                                          <Assign.To>
-                                            <OutArgument x:TypeArguments="x:Object">[ExtractDataTable.Rows(rowindex).Item(7)]</OutArgument>
-                                          </Assign.To>
-                                          <Assign.Value>
-                                            <InArgument x:TypeArguments="x:Object">[BOLNumbers.ElementAt(containerIndex).ToString]</InArgument>
-                                          </Assign.Value>
-                                        </Assign>
                                         <Assign sap:VirtualizedContainerService.HintSize="258,60" sap2010:WorkflowViewState.IdRef="Assign_28">
                                           <Assign.To>
-                                            <OutArgument x:TypeArguments="x:Object">[ExtractDataTable.Rows(rowindex).Item(8)]</OutArgument>
+                                            <OutArgument x:TypeArguments="x:Object">[ExtractDataTable.Rows(rowindex).Item(6)]</OutArgument>
                                           </Assign.To>
                                           <Assign.Value>
                                             <InArgument x:TypeArguments="x:Object">[item.ToString]</InArgument>
