@@ -86,7 +86,6 @@ class baseInfo:
         "Container Returned": "RD",
         "Container Deramped": "UR",
         "Ramped": "AL",
-		"Ramped": "RMP",
         "Released": "CA",
         "Container Picked Up": "EE",
         "Departed": "RL"
@@ -119,8 +118,6 @@ def OOCLCodeToName(code):
         return "Empty Equipment Dispatched"
     elif(code == "RL"):
         return "Rail Departure"
-    elif(code == "RMP"):
-        return "Rail Ramp"
     return None
 
 def OOCLEventTranslate(event):
