@@ -85,7 +85,19 @@ class baseInfo:
         "Loaded on rail": "AL",
         "Unloaded from rail": "UR",
         "Empty Container Returned": "RD",
-        "Empty Container Release": "EE"
+        "Empty Container Release": "EE",
+		"Loaded at Port of Transshipment":"LPOT",
+		"Unloaded at Port of Transshipment":"UNPOT",
+		"Arrival at Port of Transshipment":"APOT",
+		"Departure from Port of Transshipment":"DPOT",
+		"T/S Berthing":"TB",
+		"POD Berthing":"PODB",
+		"Feeder Arrival":"FA",
+		"Feeder Departure":"FD",
+		"Feeder Loading":"FL",
+		"Feeder Unloading":"FUL",
+		"Water POL Unloading Destination":"WD"
+		
     }
 
 def ONECodeToName(code):
@@ -113,6 +125,28 @@ def ONECodeToName(code):
         return "Return Container"
     elif(code == "EE"):
         return "Empty Equipment Dispatched"
+	elif(code == "LPOT"):
+        return "Loaded at Port of Transshipment"
+	elif(code == "UNPOT"):
+        return "Unloaded at Port of Transshipment"
+	elif(code == "APOT"):
+        return "Arrival at Port of Transshipment"
+	elif(code == "DPOT"):
+        return "Departure from Port of Transshipment"
+	elif(code == "TB"):
+        return "T/S Berthing"
+	elif(code == "PODB"):
+        return "POD Berthing"
+	elif(code == "FA"):
+        return "Feeder Arrival"
+	elif(code == "FD"):
+        return "Feeder Departure"
+	elif(code == "FL"):
+        return "Feeder Loading"
+	elif(code == "FUL"):
+        return "Feeder Unloading"
+	elif(code == "WD"):
+        return "Water POL Unloading Destination"
     return None
 
 def ONEEventTranslate(event):
