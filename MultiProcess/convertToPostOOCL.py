@@ -76,6 +76,7 @@ class baseInfo:
     StatusMapOOCL = {
         "Arrived": "A",
         "Highway Arrival": "A",
+        "Highway Departure": "HD",
         "Vessel Arrived": "VA",
         "Vessel Departed": "VD",
         "Loaded": "AE",
@@ -85,6 +86,7 @@ class baseInfo:
         "Picked Up for Delivery": "X3",
         "Container Returned": "RD",
         "Container Deramped": "UR",
+        "Construction Placement": "CP",
         "Ramped": "AL",
         "Released": "CA",
         "Container Picked Up": "EE",
@@ -118,6 +120,10 @@ def OOCLCodeToName(code):
         return "Empty Equipment Dispatched"
     elif(code == "RL"):
         return "Rail Departure"
+    elif(code == "HD"):
+        return "Highway Departure"
+    elif(code == "CP"):
+        return "Construction Placement"
     return None
 
 def OOCLEventTranslate(event):
