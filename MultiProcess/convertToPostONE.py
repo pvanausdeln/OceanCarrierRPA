@@ -74,16 +74,18 @@ class baseInfo:
     }
 
     StatusMapONE = {
-        "Gate In to Outbound Terminal": "I",
-        " at Port of Loading\n": "AE",
-        "Departure from Port of Loading\n": "VD",
-        "Arrival at Port of Discharging\n": "VA",
-        " at Port of Discharging\n": "UV",
-        "Gate Out from Inbound Terminal": "OA",
+        "Gate In to Outbound": "I",
+        " at Port of Loading": "AE",
+        "Departure from Port of Loading": "VD",
+        "Arrival at Port of Discharging": "VA",
+        " at Port of Discharging": "UV",
+        "Gate Out from Inbound": "OA",
         "Rail Departure": "RL",
         "Rail Arrival": "AR",
         "Loaded on rail": "AL",
-        "Unloaded from rail": "UR"
+        "Unloaded from rail": "UR",
+        "Empty Container Returned": "RD",
+        "Empty Container Release": "EE"
     }
 
 def ONECodeToName(code):
@@ -107,6 +109,10 @@ def ONECodeToName(code):
         return "Loaded on Rail"
     elif(code == "UR"):
         return "Unloaded from Rail"
+    elif(code == "RD"):
+        return "Return Container"
+    elif(code == "EE"):
+        return "Empty Equipment Dispatched"
     return None
 
 def ONEEventTranslate(event):
