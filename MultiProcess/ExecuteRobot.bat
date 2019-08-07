@@ -1,6 +1,8 @@
 :Schedule
 ::The below runs the RPAProcess.py script
 
+cd %~dp0
+
 python RPAProcess.py
 
 ::Change directory to where UiRobot.exe is located
