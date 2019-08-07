@@ -96,7 +96,9 @@ class baseInfo:
 		"Feeder Departure":"FD",
 		"Feeder Loading":"FL",
 		"Feeder Unloading":"FUL",
-		"Water POL Unloading Destination":"WD"
+		"Water POL Unloading Destination":"WD",
+        "Truck Terminal Departure": "TTD",
+        "Truck Terminal Arrival": "TTA"
 		
     }
 
@@ -125,28 +127,32 @@ def ONECodeToName(code):
         return "Return Container"
     elif(code == "EE"):
         return "Empty Equipment Dispatched"
-	elif(code == "LPOT"):
+    elif(code == "LPOT"):
         return "Loaded at Port of Transshipment"
-	elif(code == "UNPOT"):
+    elif(code == "UNPOT"):
         return "Unloaded at Port of Transshipment"
-	elif(code == "APOT"):
+    elif(code == "APOT"):
         return "Arrival at Port of Transshipment"
-	elif(code == "DPOT"):
+    elif(code == "DPOT"):
         return "Departure from Port of Transshipment"
-	elif(code == "TB"):
+    elif(code == "TB"):
         return "T/S Berthing"
-	elif(code == "PODB"):
+    elif(code == "PODB"):
         return "POD Berthing"
-	elif(code == "FA"):
+    elif(code == "FA"):
         return "Feeder Arrival"
-	elif(code == "FD"):
+    elif(code == "FD"):
         return "Feeder Departure"
-	elif(code == "FL"):
+    elif(code == "FL"):
         return "Feeder Loading"
-	elif(code == "FUL"):
+    elif(code == "FUL"):
         return "Feeder Unloading"
-	elif(code == "WD"):
+    elif(code == "WD"):
         return "Water POL Unloading Destination"
+    elif(code == "TTD"):
+        return "Truck Terminal Departure"
+    elif(code == "TTA"):
+        return "Truck Terminal Arrival"
     return None
 
 def ONEEventTranslate(event):
