@@ -111,14 +111,14 @@
               <av:Size x:Key="ShapeSize">216,51</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="870,5290" sap2010:WorkflowViewState.IdRef="If_3">
+          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="870,5436" sap2010:WorkflowViewState.IdRef="If_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <Sequence sap:VirtualizedContainerService.HintSize="729,5142" sap2010:WorkflowViewState.IdRef="Sequence_14">
+              <Sequence sap:VirtualizedContainerService.HintSize="729,5288" sap2010:WorkflowViewState.IdRef="Sequence_14">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="sd:DataTable" Name="TSTable" />
                   <Variable x:TypeArguments="x:Int32" Name="IDIndex" />
@@ -209,16 +209,17 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:OpenBrowser>
-                <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[containerIndex]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="691,4260" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
+                <ui:ForEach x:TypeArguments="x:Object" CurrentIndex="[containerIndex]" DisplayName="For Each" sap:VirtualizedContainerService.HintSize="691,4406" sap2010:WorkflowViewState.IdRef="ForEach`1_2" Values="[Containers]">
                   <ui:ForEach.Body>
                     <ActivityAction x:TypeArguments="x:Object">
                       <ActivityAction.Argument>
                         <DelegateInArgument x:TypeArguments="x:Object" Name="item" />
                       </ActivityAction.Argument>
-                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="659,4126" sap2010:WorkflowViewState.IdRef="Sequence_19">
+                      <Sequence DisplayName="Body" sap:VirtualizedContainerService.HintSize="659,4272" sap2010:WorkflowViewState.IdRef="Sequence_19">
                         <Sequence.Variables>
                           <Variable x:TypeArguments="x:Boolean" Default="False" Name="elementExists" />
                           <Variable x:TypeArguments="x:Boolean" Default="False" Name="pathExists" />
+                          <Variable x:TypeArguments="x:Boolean" Name="ele2Exists" />
                         </Sequence.Variables>
                         <sap:WorkflowViewStateService.ViewState>
                           <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -272,7 +273,12 @@
                             </scg:Dictionary>
                           </sap:WorkflowViewStateService.ViewState>
                         </ui:UiElementExists>
-                        <If Condition="[elementExists]" sap:VirtualizedContainerService.HintSize="621,424" sap2010:WorkflowViewState.IdRef="If_4">
+                        <ui:UiElementExists DisplayName="Element Exists 'P'" Exists="[ele2Exists]" sap:VirtualizedContainerService.HintSize="621,106" sap2010:WorkflowViewState.IdRef="UiElementExists_3">
+                          <ui:UiElementExists.Target>
+                            <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="d07f44d5265b5e83c35fd6965a845279" Selector="&lt;html app='chrome.exe' title='Error' /&gt;&lt;webctrl idx='1' tag='P' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                          </ui:UiElementExists.Target>
+                        </ui:UiElementExists>
+                        <If Condition="[elementExists or ele2Exists]" sap:VirtualizedContainerService.HintSize="621,424" sap2010:WorkflowViewState.IdRef="If_4">
                           <sap:WorkflowViewStateService.ViewState>
                             <scg:Dictionary x:TypeArguments="x:String, x:Object">
                               <x:Boolean x:Key="IsExpanded">True</x:Boolean>
