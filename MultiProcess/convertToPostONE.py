@@ -74,16 +74,30 @@ class baseInfo:
     }
 
     StatusMapONE = {
-        "Gate In to Outbound Terminal": "I",
-        " at Port of Loading\n": "AE",
-        "Departure from Port of Loading\n": "VD",
-        "Arrival at Port of Discharging\n": "VA",
-        " at Port of Discharging\n": "UV",
-        "Gate Out from Inbound Terminal": "OA",
+        "Gate In to Outbound": "I",
+        " at Port of Loading": "AE",
+        "Departure from Port of Loading": "VD",
+        "Arrival at Port of Discharging": "VA",
+        " at Port of Discharging": "UV",
+        "Gate Out from Inbound": "OA",
         "Rail Departure": "RL",
         "Rail Arrival": "AR",
         "Loaded on rail": "AL",
-        "Unloaded from rail": "UR"
+        "Unloaded from rail": "UR",
+        "Empty Container Returned": "RD",
+        "Empty Container Release": "EE",
+		"Loaded at Port of Transshipment":"LPOT",
+		"Unloaded at Port of Transshipment":"UNPOT",
+		"Arrival at Port of Transshipment":"APOT",
+		"Departure from Port of Transshipment":"DPOT",
+		"T/S Berthing":"TB",
+		"POD Berthing":"PODB",
+		"Feeder Arrival":"FA",
+		"Feeder Departure":"FD",
+		"Feeder Loading":"FL",
+		"Feeder Unloading":"FUL",
+		"Water POL Unloading Destination":"WD"
+		
     }
 
 def ONECodeToName(code):
@@ -107,6 +121,32 @@ def ONECodeToName(code):
         return "Loaded on Rail"
     elif(code == "UR"):
         return "Unloaded from Rail"
+    elif(code == "RD"):
+        return "Return Container"
+    elif(code == "EE"):
+        return "Empty Equipment Dispatched"
+	elif(code == "LPOT"):
+        return "Loaded at Port of Transshipment"
+	elif(code == "UNPOT"):
+        return "Unloaded at Port of Transshipment"
+	elif(code == "APOT"):
+        return "Arrival at Port of Transshipment"
+	elif(code == "DPOT"):
+        return "Departure from Port of Transshipment"
+	elif(code == "TB"):
+        return "T/S Berthing"
+	elif(code == "PODB"):
+        return "POD Berthing"
+	elif(code == "FA"):
+        return "Feeder Arrival"
+	elif(code == "FD"):
+        return "Feeder Departure"
+	elif(code == "FL"):
+        return "Feeder Loading"
+	elif(code == "FUL"):
+        return "Feeder Unloading"
+	elif(code == "WD"):
+        return "Water POL Unloading Destination"
     return None
 
 def ONEEventTranslate(event):

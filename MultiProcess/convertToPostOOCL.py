@@ -86,7 +86,10 @@ class baseInfo:
         "Container Returned": "RD",
         "Container Deramped": "UR",
         "Ramped": "AL",
-        "Released": "CA"
+		"Ramped":"RMP",
+        "Released": "CA",
+        "Container Picked Up": "EE",
+        "Departed": "RL"
     }
 
 def OOCLCodeToName(code):
@@ -110,10 +113,14 @@ def OOCLCodeToName(code):
         return "Return Container"
     elif(code == "UR"):
         return "UNLOADED_FROM_RAIL"
-    elif(code == "AL"):
-        return "LOADED_ON_RAIL"
     elif(code == "CA"):
         return "Cargo Available"
+    elif(code == "EE"):
+        return "Empty Equipment Dispatched"
+    elif(code == "RL"):
+        return "Rail Departure"
+	elif(code=="RMP"):
+		return "Rail Ramp"
     return None
 
 def OOCLEventTranslate(event):
@@ -141,8 +148,8 @@ def OOCLPost(container, path):
                 postJson["vessel"] = row[7]
                 postJson["voyageNumber"] = row[8]
                 postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[0])
-                if(postJson["eventCode"] == "AE" and row[3] == "Railway"):
-                    postJson["eventCode"], postJson["EventName"] = ("AL","LOADED_ON_RAILWAY")
+                if(postJson["eventCode"] == "AE" and row[3] == "Rail"):
+                    postJson["EventCode"],postJson["EventName"] = ("AL", "LOADED_ON_RAIL")
                 postJson["resolvedEventSource"] = "OOCL RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
