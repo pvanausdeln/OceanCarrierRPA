@@ -298,11 +298,11 @@
                                 </While>
                                 <ui:UiElementExists DisplayName="Element Exists 'SPAN'" Exists="[elementExists]" sap:VirtualizedContainerService.HintSize="621,106" sap2010:WorkflowViewState.IdRef="UiElementExists_2">
                                   <ui:UiElementExists.Target>
-                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="72ab76392e73d8956bdd939ec7b77fc9" Selector="&lt;webctrl id='detail' tag='TABLE' /&gt;&lt;webctrl aaname='No.' tag='TH' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
+                                    <ui:Target ClippingRegion="{x:Null}" Element="{x:Null}" InformativeScreenshot="8b148e8e44c81a310c8c7806bf2361dd" Selector="&lt;webctrl tag='SPAN' class='ui-button-text' css-selector='body&amp;gt;div&amp;gt;div&amp;gt;div&amp;gt;button&amp;gt;span' parentclass='btn_type1 ui-button ui-widget ui-state-default ui-button-text-only' /&gt;" TimeoutMS="3000" WaitForReady="INTERACTIVE" />
                                   </ui:UiElementExists.Target>
                                 </ui:UiElementExists>
                                 <If Condition="[elementExists]" sap:VirtualizedContainerService.HintSize="621,507" sap2010:WorkflowViewState.IdRef="If_4">
-                                  <If.Else>
+                                  <If.Then>
                                     <Sequence sap:VirtualizedContainerService.HintSize="368,360" sap2010:WorkflowViewState.IdRef="Sequence_46">
                                       <sap:WorkflowViewStateService.ViewState>
                                         <scg:Dictionary x:TypeArguments="x:String, x:Object">
@@ -334,7 +334,7 @@
                                       </Assign>
                                       <ui:Continue sap:VirtualizedContainerService.HintSize="330,22" sap2010:WorkflowViewState.IdRef="Continue_2" />
                                     </Sequence>
-                                  </If.Else>
+                                  </If.Then>
                                 </If>
                                 <Assign sap:VirtualizedContainerService.HintSize="621,60" sap2010:WorkflowViewState.IdRef="Assign_22">
                                   <Assign.To>
