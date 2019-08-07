@@ -196,8 +196,7 @@ def main(containerList, cwd):
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        hi=ONEPost(container, path)
-    return hi
+        ONEPost(container, path)
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
