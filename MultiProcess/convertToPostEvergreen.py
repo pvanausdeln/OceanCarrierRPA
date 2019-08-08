@@ -83,7 +83,8 @@ class baseInfo:
         "Discharged": "UV",
         "Received": "CO",
         "Full import ": "CO",
-        "Empty container received": "RD"
+        "Empty container received": "EE",
+        "Empty container returned": "RD"
     }
 
 def EvergreenCodeToName(code):

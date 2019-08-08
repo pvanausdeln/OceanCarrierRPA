@@ -85,7 +85,7 @@ def CMACGMEventTranslate(event):
         return ("Vessel Departure", "VD")
     elif(event.find("Discharge") != -1):
         return ("Unloaded from Vessel", "UV")
-    elif(event.find("Arrival final point") != -1):
+    elif(event.find("Arrival final port") != -1):
         return ("Vessel Arrival", "VA")
     elif(event.find("Received for ") != -1):
         return ("Received", "R")
