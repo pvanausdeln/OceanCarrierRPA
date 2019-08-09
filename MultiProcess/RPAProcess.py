@@ -13,6 +13,7 @@ mapping = {
     "APL" : "APL",
 	"APLU":"APL",
     "CGM" : "CGM",
+    "COSU": "COSCO",
 	"CDMU":"CGM",
     "OC2" : "OOCL",
     "OOCL": "OOCL",
