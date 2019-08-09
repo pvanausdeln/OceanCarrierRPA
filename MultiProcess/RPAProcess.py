@@ -24,7 +24,7 @@ mapping = {
 if(os.path.exists(r"Container_Tracking.xlsx")): # replace with correct filepath
     os.remove(r"Container_Tracking.xlsx") # replace with correct filepath
 
-url = 'https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/vessel/track'
+url = 'https://apps.blumesolutions.com/shipmentservice-api/v1/bv/vessel/track'
 filename = 'Container_Tracking.xlsx'
 r = requests.get(url, verify=False)
 
