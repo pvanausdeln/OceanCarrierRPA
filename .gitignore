@@ -2,5 +2,4 @@
 .*/
 *.xlsx
 **/*_Container_Tracking.xlsx
-**/Timestamps.xlsx
-MultiProcess/Timestamps.xlsx
+MultiProcess/**.xlsx
