@@ -93,15 +93,15 @@ def CMACGMEventTranslate(event):
         return ("Return Container", "RD")
     elif(event.find("Gate In Full") != -1):
         return ("Ingate Load", "I")
-    elif(event.find("Full Load on rail") != -1):
+    elif(event.find("Full Load on rail") != -1 or event.find("Container on rail for import") != -1):
         return ("Loaded on Rail", "AL")
     elif(event.find("Container in transit ") != -1 or event.find("Container on rail for export") != -1):
         return ("In Transit", "IT")
     elif(event.find("Rail departed Origin") != -1):
         return ("RAIL_DEPARTURE", "RL")
-    elif(event.find("Train arrival for export") != -1):
+    elif(event.find("Train arrival for export") != -1 or event.find("Train arrival for import") != -1):
         return ("Rail Arrival at Destination Intermodal Ramp", "AR")
-    elif(event.find("Export unload full from Rail") != -1):
+    elif(event.find("Export unload full from rail") != -1 or event.find("Import unload full from rail") != -1):
         return ("Unloaded from a rail car", "UR")
     elif(event.find("Container to consignee") != -1):
         return ("Arrived at Delivery Location", "X1")
