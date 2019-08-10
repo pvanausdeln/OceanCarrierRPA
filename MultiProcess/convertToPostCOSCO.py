@@ -74,16 +74,48 @@ class baseInfo:
     }
 
     StatusMapCOSCO = {
-        "Gate out empty": "OA",
-        "Gate in empty": "I",
-        "Vessel departed": "VD",
-        "Vessel arrived": "VA",
-        "Loaded": "AE",
-        "Discharged": "UV"
+        "Empty Equipment Despatched": "EE",
+        "Cargo Received": "CO",
+        "Gate-in at First POL": "I",
+        "Loaded at First POL": "AE",
+        "Discharge at Last POL": "UV",
+        "Gate-out from Last POD": "AL",
+        "First Loaded on Rail under I/B": "RL",
+        "Gate-in at Final Hub": "I",
+        "Last Arrival under I/B": "AR",
+        "Rail Arrival at Final Hub": "DA",
+        "De-ramp at Final Hub": "D",
+        "Last De-ramp under I/B": "D1",
+        "Gate-out from Final Hub": "OA",
+        "Emopty Equipment Returned": "RD",
+        "Discharged at T/S POD": "UV",
+        "Loaded at T/S POL": "AE",
+        "Transfer": "LOL",
+        "Gate-out from First Full Facility": "LMAO"
     }
 
 def COSCOCodeToName(code):
-    if(code == "AE"):
+    if(code == "EE"):
+        return "Empty Equipment Dispatched"
+    elif(code == "CO"):
+        return "Cargo Received"
+    elif(code == "OL"):
+        return "Outgate Load"
+    elif(code == "AL"):
+        return "Loaded on Rail"
+    elif(code == "RL"):
+        return "Rail Departure"
+    elif(code == "AR"):
+        return "Rail Arrival"
+    elif(code == "DA"):
+        return "Destination Arrival"
+    elif(code == "D"):
+        return "Unloaded at Destination"
+    elif(code == "D1"):
+        return "Unloading Complete"
+    elif(code == "RD"):
+        return "Return Container"
+    elif(code == "AE"):
         return "Loaded on Vessel"
     elif(code == "VD"):
         return "Vessel Departure"
