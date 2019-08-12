@@ -113,25 +113,25 @@ def HyundaiPost(step):
     #         for row in reader:
     with open(step) as jsonData:
         data = json.load(jsonData)
-        postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-        postJson["unitId"] = data["ContainerID"]
-        postJson["location"] = data["Location"].split("\n")[0]
-        postJson["city"] = postJson["location"].split(",")[0]
-        postJson["eventTime"] = datetime.datetime.strptime(data["Date"]+" "+data["Time"].split(" ")[0], '%d-%b-%Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-        # postJson["vessel"] = row[11]
-        # postJson["voyageNumber"] = row[12]
-        # postJson["workOrderNumber"] = row[14]
-        # postJson["billOfLadingNumber"] = row[13]
-        postJson["eventCode"], postJson["eventName"] = HyundaiEventTranslate(data["Status Description"])
-        postJson["resolvedEventSource"] = "Hyundai RPA"
-        postJson["codeType"] = "UNLOCODE"
-        postJson["reportSource"] = "OceanEvent"
-        print(json.dumps(postJson))
-        if(postJson["eventCode"] == None):
-            return
-        headers = {'content-type':'application/json'}
-        r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-        print(r)
+    postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+    postJson["unitId"] = data["ContainerID"]
+    postJson["location"] = data["Location"].split("\n")[0]
+    postJson["city"] = postJson["location"].split(",")[0]
+    postJson["eventTime"] = datetime.datetime.strptime(data["Date"]+" "+data["Time"].split(" ")[0], '%d-%b-%Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+    # postJson["vessel"] = row[11]
+    # postJson["voyageNumber"] = row[12]
+    # postJson["workOrderNumber"] = row[14]
+    # postJson["billOfLadingNumber"] = row[13]
+    postJson["eventCode"], postJson["eventName"] = HyundaiEventTranslate(data["Status Description"])
+    postJson["resolvedEventSource"] = "Hyundai RPA"
+    postJson["codeType"] = "UNLOCODE"
+    postJson["reportSource"] = "OceanEvent"
+    print(json.dumps(postJson))
+    if(postJson["eventCode"] == None):
+        return
+    headers = {'content-type':'application/json'}
+    r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+    print(r)
     return
 
 def main(containerList, cwd):
