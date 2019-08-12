@@ -138,11 +138,6 @@ def APLPost(container, path):
 				headers = {'content-type':'application/json'}
 				r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
 				print(r)
-		
-
-
-    return
-
 
 def main(containerList, cwd):
     path=""
