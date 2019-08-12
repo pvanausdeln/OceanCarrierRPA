@@ -102,36 +102,36 @@ def HyundaiEventTranslate(event):
         if(event.find(key) != -1):
             return value, HyundaiCodeToName(value)
     return (None, None)
-    
 
 
-def HyundaiPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader) # skip first row
-            for row in reader:
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
-                    continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = HyundaiEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "Hyundai RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+
+def HyundaiPost(step):
+    # if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
+    #     with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
+    #         reader = csv.reader(containerInfo)
+    #         next(reader) # skip first row
+    #         for row in reader:
+    with open(step) as jsonData:
+        data = json.load(jsonData)
+        postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+        postJson["unitId"] = data["ContainerID"]
+        postJson["location"] = data["Location"].split("\n")[0]
+        postJson["city"] = postJson["location"].split(",")[0]
+        postJson["eventTime"] = datetime.datetime.strptime(data["Date"]+" "+data["Time"].split(" ")[0], '%d-%b-%Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+        # postJson["vessel"] = row[11]
+        # postJson["voyageNumber"] = row[12]
+        # postJson["workOrderNumber"] = row[14]
+        # postJson["billOfLadingNumber"] = row[13]
+        postJson["eventCode"], postJson["eventName"] = HyundaiEventTranslate(data["Status Description"])
+        postJson["resolvedEventSource"] = "Hyundai RPA"
+        postJson["codeType"] = "UNLOCODE"
+        postJson["reportSource"] = "OceanEvent"
+        print(json.dumps(postJson))
+        if(postJson["eventCode"] == None):
+            return
+        headers = {'content-type':'application/json'}
+        r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+        print(r)
     return
 
 def main(containerList, cwd):
@@ -139,7 +139,13 @@ def main(containerList, cwd):
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        HyundaiPost(container, path)
+        fileList= glob.glob(r""+path+"ContainerInformation\\"+container+"Step*.json", recursive= True)
+        if (not fileList):
+            continue
+        fileList = [f for f in fileList if container in f] #set of steps for this number
+        fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+        for step in fileList:
+            HyundaiPost(step)
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
