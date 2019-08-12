@@ -98,7 +98,7 @@ def APLEventTranslate(event):
         return ("In Transit", "IT")
     elif(event.find("Rail departed Origin") != -1):
         return ("RAIL_DEPARTURE", "RL")
-    elif(event.find("Train arrival for export" != -1) or event.find("Train arrival for import") != -1):
+    elif(event.find("Train arrival for export") != -1 or event.find("Train arrival for import") != -1):
         return ("Rail Arrival at Destination Intermodal Ramp", "AR")
     elif(event.find("Export unload full from Rail") != -1 or event.find("Import unload full from rail") != -1):
         return ("Unloaded from a rail car", "UR")
@@ -138,6 +138,12 @@ def APLPost(container, path):
 				headers = {'content-type':'application/json'}
 				r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
 				print(r)
+
+def testMain(container):
+    path=""
+    for x in os.getcwd().split("\\"):
+        path+=x+"\\\\"
+    APLPost(container, path)
 
 def main(containerList, cwd):
     path=""
