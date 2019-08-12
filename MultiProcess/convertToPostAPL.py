@@ -113,31 +113,32 @@ def APLEventTranslate(event):
 
 
 def APLPost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+ container + ".csv")):
-        with open(path+"ContainerInformation\\"+ container +".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader)
-            for row in reader:
-                if(row[0].find("Provisional moves not found, please feel free to use Contact Support link for more information")!= -1):
-                    continue
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[3].replace("Accessible text","")
-                postJson["city"] = postJson["location"].split(",")[0]
-                postJson["eventTime"] = datetime.datetime.strptime(row[0], '%a %d %b %Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = str(row[4])
-                postJson["voyageNumber"] = str(row[5])
-                postJson["unitType"] = row[6]
-                postJson["eventName"], postJson["eventCode"] = APLEventTranslate(row[2])
-                postJson["resolvedEventSource"] = "APL RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+	if(os.path.isfile(path+"ContainerInformation\\"+ container + ".csv")):
+		with open(path+"ContainerInformation\\"+ container +".csv") as containerInfo:
+			reader = csv.reader(containerInfo)
+			next(reader)
+			for row in reader:
+				if(row[0].find("Provisional moves not found, please feel free to use Contact Support link for more information")!= -1):
+					continue
+				postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+				postJson["unitId"] = container
+				postJson["location"] = row[3].replace("Accessible text","")
+				postJson["city"] = postJson["location"].split(",")[0]
+				postJson["eventTime"] = datetime.datetime.strptime(row[0], '%a %d %b %Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+				postJson["vessel"] = str(row[4])
+				postJson["voyageNumber"] = str(row[5])
+				postJson["unitType"] = row[6]
+				postJson["eventName"], postJson["eventCode"] = APLEventTranslate(row[2])
+				postJson["resolvedEventSource"] = "APL RPA"
+				postJson["codeType"] = "UNLOCODE"
+				postJson["reportSource"] = "OceanEvent"
+				print(json.dumps(postJson))
+				if(postJson["eventCode"] == None):
+					continue
+				headers = {'content-type':'application/json'}
+				r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+				print(r)
+		
 
 
     return
