@@ -102,36 +102,36 @@ def SMLineEventTranslate(event):
         if(event.find(key) != -1):
             return value, SMLineCodeToName(value)
     return (None, None)
-    
 
 
-def SMLinePost(container, path):
-    if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
-        with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
-            reader = csv.reader(containerInfo)
-            next(reader) # skip first row
-            for row in reader:
-                postJson = copy.deepcopy(baseInfo.shipmentEventBase)
-                postJson["unitId"] = container
-                postJson["location"] = row[1].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
-                if(row[2].strip() == "" or row[3].strip() == ""):
-                    continue
-                postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
-                postJson["eventCode"], postJson["eventName"] = SMLineEventTranslate(row[0])
-                postJson["resolvedEventSource"] = "SMLine RPA"
-                postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
-                if(postJson["eventCode"] == None):
-                    continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+
+def SMLinePost(step):
+    # if(os.path.isfile(path+"ContainerInformation\\"+container+".csv")):
+    #     with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
+    #         reader = csv.reader(containerInfo)
+    #         next(reader) # skip first row
+    #         for row in reader:
+    with open(step) as jsonData:
+        data = json.load(jsonData)
+    postJson = copy.deepcopy(baseInfo.shipmentEventBase)
+    postJson["unitId"] = data["ContainerID"]
+    postJson["location"] = data["Location"].split("\n")[0]
+    postJson["city"] = postJson["location"].split(",")[0]
+    postJson["eventTime"] = datetime.datetime.strptime(data["Event Date"], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+    # postJson["vessel"] = row[11]
+    # postJson["voyageNumber"] = row[12]
+    # postJson["workOrderNumber"] = row[14]
+    # postJson["billOfLadingNumber"] = row[13]
+    postJson["eventCode"], postJson["eventName"] = SMLineEventTranslate(data["Status"])
+    postJson["resolvedEventSource"] = "SMLine RPA"
+    postJson["codeType"] = "UNLOCODE"
+    postJson["reportSource"] = "OceanEvent"
+    print(json.dumps(postJson))
+    if(postJson["eventCode"] == None):
+        continue
+    headers = {'content-type':'application/json'}
+    r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
+    print(r)
     return
 
 def main(containerList, cwd):
@@ -139,7 +139,13 @@ def main(containerList, cwd):
     for x in cwd.split("\\"):
         path+=x+"\\\\"
     for container in containerList:
-        SMLinePost(container, path)
+        fileList= glob.glob(r""+path+"ContainerInformation\\"+container+"Step*.json", recursive= True)
+        if (not fileList):
+            continue
+        fileList = [f for f in fileList if container in f] #set of steps for this number
+        fileList.sort(key=os.path.getmtime) #order steps correctly (by file edit time)
+        for step in fileList:
+            SMLinePost(step)
 
 if __name__ == "__main__":
     main(sys.argv[1], sys.argv[2])
