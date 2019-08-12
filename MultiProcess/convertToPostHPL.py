@@ -102,7 +102,7 @@ def HPLEventTranslate(event):
         if(event.find(key) != -1):
             return value, HPLCodeToName(value)
     return (None, None)
-    
+
 
 
 def HPLPost(container, path):
@@ -118,14 +118,15 @@ def HPLPost(container, path):
                 if(row[2].strip() == "" or row[3].strip() == ""):
                     continue
                 postJson["eventTime"] = datetime.datetime.strptime(row[2]+" "+row[3], '%Y-%m-%d %H:%M').strftime('%m-%d-%Y %H:%M:%S')
-                postJson["vessel"] = row[11]
-                postJson["voyageNumber"] = row[12]
-                postJson["workOrderNumber"] = row[14]
-                postJson["billOfLadingNumber"] = row[13]
+                # postJson["vessel"] = row[11]
+                # postJson["voyageNumber"] = row[12]
+                # postJson["workOrderNumber"] = row[14]
+                # postJson["billOfLadingNumber"] = row[13]
                 postJson["eventCode"], postJson["eventName"] = HPLEventTranslate(row[0])
                 postJson["resolvedEventSource"] = "HPL RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
+                postJson["unitTypeCode"]= row[7]
                 print(json.dumps(postJson))
                 if(postJson["eventCode"] == None):
                     continue
