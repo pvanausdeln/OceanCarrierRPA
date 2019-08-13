@@ -13,7 +13,7 @@ mapping = {
 	"APLU":"APL",
     "CGM" : "CGM",
     "COSU": "COSCO",
-	"CDMU":"CGM",
+	"CMDU":"CGM",
     "OC2" : "OOCL",
     "OOCL": "OOCL",
 	"OOLU":"OOCL",
@@ -79,7 +79,7 @@ for carrier in carriers:
     # i.e. APLU-BLU would match with the "APL" key in mapping.
     # play with the cutoff point range for accuracy tweaking. 0.0 - 1.0
     try:
-        carrier_prefix  = get_close_matches( str(carrier).upper(), carrier_prefixes, 1, 0.4)[0]
+        carrier_prefix  = get_close_matches(str(carrier).upper(), carrier_prefixes, 1, 0.4)[0]
     except Exception as e:
         print(e)
         print("COULD NOT FIND CARRIER FOR " + carrier)
@@ -97,5 +97,5 @@ for carrier in carriers:
 for filename in excels:
     if( os.path.exists( filename ) ):
         os.remove( filename )
-    excels[filename].drop_duplicates(inplace=True)
+    # excels[filename].drop_duplicates(inplace=True)
     excels[filename].to_excel(filename)
