@@ -195,6 +195,7 @@ def main(containerList, cwd):
     path=""
     for x in cwd.split("\\"):
         path+=x+"\\\\"
+    containerList = list(set(containerList))
     for container in containerList:
         ONEPost(container, path)
 
