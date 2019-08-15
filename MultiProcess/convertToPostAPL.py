@@ -127,7 +127,6 @@ def APLPost(container, path):
 				postJson["eventTime"] = datetime.datetime.strptime(row[0], '%a %d %b %Y %H:%M').strftime('%m-%d-%Y %H:%M:%S')
 				postJson["vessel"] = str(row[4])
 				postJson["voyageNumber"] = str(row[5])
-				postJson["unitType"] = row[6]
 				postJson["eventName"], postJson["eventCode"] = APLEventTranslate(row[2])
 				postJson["resolvedEventSource"] = "APL RPA"
 				postJson["codeType"] = "UNLOCODE"
