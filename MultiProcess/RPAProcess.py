@@ -10,7 +10,6 @@ mapping = {
 	"ONEY":"ONE",
     "EVE" : "EVERGREEN",
 	"EISU":"EVERGREEN",
-    "APL" : "APL",
 	"APLU":"APL",
     "CGM" : "CGM",
     "COSU": "COSCO",
