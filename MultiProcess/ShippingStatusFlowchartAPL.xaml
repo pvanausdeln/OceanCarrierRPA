@@ -111,14 +111,14 @@
               <av:Size x:Key="ShapeSize">216,51</av:Size>
             </scg:Dictionary>
           </sap:WorkflowViewStateService.ViewState>
-          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="870,5004" sap2010:WorkflowViewState.IdRef="If_3">
+          <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="870,5104" sap2010:WorkflowViewState.IdRef="If_3">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
               </scg:Dictionary>
             </sap:WorkflowViewStateService.ViewState>
             <If.Then>
-              <Sequence sap:VirtualizedContainerService.HintSize="729,4856" sap2010:WorkflowViewState.IdRef="Sequence_14">
+              <Sequence sap:VirtualizedContainerService.HintSize="729,4956" sap2010:WorkflowViewState.IdRef="Sequence_14">
                 <Sequence.Variables>
                   <Variable x:TypeArguments="sd:DataTable" Name="TSTable" />
                   <Variable x:TypeArguments="x:Int32" Name="IDIndex" />
@@ -156,6 +156,14 @@
                     </scg:Dictionary>
                   </sap:WorkflowViewStateService.ViewState>
                 </ui:ExcelApplicationScope>
+                <Assign sap:VirtualizedContainerService.HintSize="691,60" sap2010:WorkflowViewState.IdRef="Assign_22">
+                  <Assign.To>
+                    <OutArgument x:TypeArguments="scg:IEnumerable(x:Object)">[Containers]</OutArgument>
+                  </Assign.To>
+                  <Assign.Value>
+                    <InArgument x:TypeArguments="scg:IEnumerable(x:Object)">[Containers.Distinct()]</InArgument>
+                  </Assign.Value>
+                </Assign>
                 <ui:ReadRange AddHeaders="True" DataTable="[TSTable]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="691,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="Timestamps.xlsx">
                   <ui:ReadRange.Range>
                     <InArgument x:TypeArguments="x:String">

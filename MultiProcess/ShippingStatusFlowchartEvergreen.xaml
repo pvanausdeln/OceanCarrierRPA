@@ -93,14 +93,14 @@
           <av:Size x:Key="ShapeSize">216,51</av:Size>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="938,6773" sap2010:WorkflowViewState.IdRef="If_4">
+      <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="938,6873" sap2010:WorkflowViewState.IdRef="If_4">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <If.Then>
-          <Sequence sap:VirtualizedContainerService.HintSize="797,6625" sap2010:WorkflowViewState.IdRef="Sequence_10">
+          <Sequence sap:VirtualizedContainerService.HintSize="797,6725" sap2010:WorkflowViewState.IdRef="Sequence_10">
             <sap:WorkflowViewStateService.ViewState>
               <scg:Dictionary x:TypeArguments="x:String, x:Object">
                 <x:Boolean x:Key="IsExpanded">True</x:Boolean>
@@ -134,6 +134,14 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:ExcelApplicationScope>
+            <Assign sap:VirtualizedContainerService.HintSize="759,60" sap2010:WorkflowViewState.IdRef="Assign_8">
+              <Assign.To>
+                <OutArgument x:TypeArguments="scg:IEnumerable(x:Object)">[Containers]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="scg:IEnumerable(x:Object)">[Containers.Distinct()]</InArgument>
+              </Assign.Value>
+            </Assign>
             <ui:ReadRange AddHeaders="True" DataTable="[TSTable]" DisplayName="Read Range" sap:VirtualizedContainerService.HintSize="759,87" sap2010:WorkflowViewState.IdRef="ReadRange_1" SheetName="Sheet1" WorkbookPath="Timestamps.xlsx">
               <ui:ReadRange.Range>
                 <InArgument x:TypeArguments="x:String">

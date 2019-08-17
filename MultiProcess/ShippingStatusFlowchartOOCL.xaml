@@ -92,14 +92,14 @@
           <av:Size x:Key="ShapeSize">216,51</av:Size>
         </scg:Dictionary>
       </sap:WorkflowViewStateService.ViewState>
-      <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="976,899" sap2010:WorkflowViewState.IdRef="If_5">
+      <If Condition="[fileExists]" sap:VirtualizedContainerService.HintSize="976,999" sap2010:WorkflowViewState.IdRef="If_5">
         <sap:WorkflowViewStateService.ViewState>
           <scg:Dictionary x:TypeArguments="x:String, x:Object">
             <x:Boolean x:Key="IsExpanded">True</x:Boolean>
           </scg:Dictionary>
         </sap:WorkflowViewStateService.ViewState>
         <If.Then>
-          <Sequence sap:VirtualizedContainerService.HintSize="835,751" sap2010:WorkflowViewState.IdRef="Sequence_52">
+          <Sequence sap:VirtualizedContainerService.HintSize="835,851" sap2010:WorkflowViewState.IdRef="Sequence_52">
             <Sequence.Variables>
               <Variable x:TypeArguments="x:Boolean" Name="windowExists" />
             </Sequence.Variables>
@@ -149,6 +149,14 @@
                 </scg:Dictionary>
               </sap:WorkflowViewStateService.ViewState>
             </ui:ReadRange>
+            <Assign sap:VirtualizedContainerService.HintSize="797,60" sap2010:WorkflowViewState.IdRef="Assign_19">
+              <Assign.To>
+                <OutArgument x:TypeArguments="scg:IEnumerable(x:Object)">[Containers]</OutArgument>
+              </Assign.To>
+              <Assign.Value>
+                <InArgument x:TypeArguments="scg:IEnumerable(x:Object)">[Containers.Distinct()]</InArgument>
+              </Assign.Value>
+            </Assign>
             <ui:OpenBrowser BrowserType="Chrome" DisplayName="Open Browser" Hidden="False" sap:VirtualizedContainerService.HintSize="797,51" sap2010:WorkflowViewState.IdRef="OpenBrowser_1" NewSession="True" Private="False" UiBrowser="[chrome]" Url="https://www.oocl.com/eng/ourservices/eservices/cargotracking/Pages/cargotracking.aspx?site=uk&amp;lang=eng">
               <ui:OpenBrowser.Body>
                 <ActivityAction x:TypeArguments="x:Object">
