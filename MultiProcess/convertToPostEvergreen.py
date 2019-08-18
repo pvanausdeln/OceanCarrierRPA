@@ -82,9 +82,10 @@ class baseInfo:
         "loaded on vessel": "AE",
         "Discharged": "UV",
         "Received": "CO",
-        "Full import ": "CO",
         "Empty container received": "EE",
-        "Empty container returned": "RD"
+        "Empty container returned": "RD",
+        "Despatched by rail" : "RL",
+        "JUNCTION RECEIVED" : "IT"
     }
 
 def EvergreenCodeToName(code):
@@ -104,6 +105,10 @@ def EvergreenCodeToName(code):
         return "Cargo Received"
     elif(code == "RD"):
         return "Return Container"
+    elif(code=="RL"):
+        return "Rail Departure"
+    elif(code=="IT"):
+        return "In Transit"
     return None
 
 def EvergreenEventTranslate(event):
@@ -111,7 +116,7 @@ def EvergreenEventTranslate(event):
         if(event.find(key) != -1):
             return value, EvergreenCodeToName(value)
     return (None, None)
-    
+
 
 
 def EvergreenPost(container, path):
