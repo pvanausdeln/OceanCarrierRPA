@@ -150,11 +150,11 @@ def OOCLPost(container, path):
                 postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[0])
                 if(postJson["eventCode"] == "AE" and (row[3].strip() == "Rail" or row[3].strip() == "Railway"):
                     postJson["eventCode"], postJson["eventName"] = ("AL", "LOADED_ON_RAIL")
-                elif(postJson["eventCode"] == "A" and (row[3].strip() == "Vessel")):
+                if(postJson["eventCode"] == "A" and (row[3].strip() == "Vessel")):
                     postJson["eventCode"], postJson["eventName"] = ("VA", "Vessel Arrival")
-                elif(postJson["eventCode"] == "A" and (row[3].strip() == "Rail" or row[3].strip() == "Railway"):
+                if(postJson["eventCode"] == "A" and (row[3].strip() == "Rail" or row[3].strip() == "Railway"):
                     postJson["eventCode"], postJson["eventName"] = ("AR", "Rail Arrival at Destination Intermodal Ramp")
-                elif(postJson["eventCode"] == "RL" and (row[3].strip() == "Vessel"):
+                if(postJson["eventCode"] == "RL" and (row[3].strip() == "Vessel"):
                     postJson["eventCode"], postJson["eventName"] = ("VD", "Vessel Departure")
                 postJson["resolvedEventSource"] = "OOCL RPA"
                 postJson["codeType"] = "UNLOCODE"
