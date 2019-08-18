@@ -83,7 +83,6 @@ class baseInfo:
         "Discharged": "UV",
         "Carrier Released": "CR",
         "Container Received": "CO",
-        "Picked Up for Delivery": "X3",
         "Container Returned": "RD",
         "Container Deramped": "UR",
         "Construction Placement": "CP",
@@ -108,8 +107,6 @@ def OOCLCodeToName(code):
         return "Carrier Release"
     elif(code == "CO"):
         return "Cargo Received"
-    elif(code == "X3"):
-        return "Arrived for Pickup"
     elif(code == "RD"):
         return "Return Container"
     elif(code == "UR"):
@@ -131,7 +128,7 @@ def OOCLEventTranslate(event):
         if(event.find(key) != -1):
             return value, OOCLCodeToName(value)
     return (None, None)
-    
+
 
 
 def OOCLPost(container, path):
@@ -151,8 +148,14 @@ def OOCLPost(container, path):
                 postJson["vessel"] = row[7]
                 postJson["voyageNumber"] = row[8]
                 postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[0])
-                if(postJson["eventCode"] == "AE" and row[3] == "Rail"):
+                if(postJson["eventCode"] == "AE" and (row[3].strip() == "Rail" or row[3].strip() == "Railway"):
                     postJson["eventCode"], postJson["eventName"] = ("AL", "LOADED_ON_RAIL")
+                elif(postJson["eventCode"] == "A" and (row[3].strip() == "Vessel")):
+                    postJson["eventCode"], postJson["eventName"] = ("VA", "Vessel Arrival")
+                elif(postJson["eventCode"] == "A" and (row[3].strip() == "Rail" or row[3].strip() == "Railway"):
+                    postJson["eventCode"], postJson["eventName"] = ("AR", "Rail Arrival at Destination Intermodal Ramp")
+                elif(postJson["eventCode"] == "RL" and (row[3].strip() == "Vessel"):
+                    postJson["eventCode"], postJson["eventName"] = ("VD", "Vessel Departure")
                 postJson["resolvedEventSource"] = "OOCL RPA"
                 postJson["codeType"] = "UNLOCODE"
                 postJson["reportSource"] = "OceanEvent"
