@@ -10,7 +10,7 @@ import string
 import re
 
 class baseInfo:
-    postURL = "https://apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
+    postURL = "https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
 
     shipmentEventBase = {
     "associatedAssetSize": None,
