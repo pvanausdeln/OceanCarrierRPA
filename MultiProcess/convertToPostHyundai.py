@@ -76,8 +76,8 @@ class baseInfo:
     StatusMapHyundai = {
         "Gate out empty": "OA",
         "Gate in empty": "I",
-        "Vessel departed": "VD",
-        "Vessel arrived": "VA",
+        "Vessel Departed": "VD",
+        "Vessel Arrived": "VA",
         "Loaded": "AE",
         "Discharged": "UV"
     }
