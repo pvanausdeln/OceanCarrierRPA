@@ -9,7 +9,7 @@ import csv
 import string
 
 class baseInfo:
-    postURL = "https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
+    postURL = "https://apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
 
     shipmentEventBase = {
     "associatedAssetSize": None,
@@ -148,13 +148,13 @@ def OOCLPost(container, path):
                 postJson["vessel"] = row[7]
                 postJson["voyageNumber"] = row[8]
                 postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[0])
-                if(postJson["eventCode"] == "AE" and (row[3].strip() == "Rail" or row[3].strip() == "Railway"):
+                if(postJson["eventCode"] == "AE" and (row[3].strip() == "Rail" or row[3].strip() == "Railway")):
                     postJson["eventCode"], postJson["eventName"] = ("AL", "LOADED_ON_RAIL")
                 if(postJson["eventCode"] == "A" and (row[3].strip() == "Vessel")):
                     postJson["eventCode"], postJson["eventName"] = ("VA", "Vessel Arrival")
-                if(postJson["eventCode"] == "A" and (row[3].strip() == "Rail" or row[3].strip() == "Railway"):
+                if(postJson["eventCode"] == "A" and (row[3].strip() == "Rail" or row[3].strip() == "Railway")):
                     postJson["eventCode"], postJson["eventName"] = ("AR", "Rail Arrival at Destination Intermodal Ramp")
-                if(postJson["eventCode"] == "RL" and (row[3].strip() == "Vessel"):
+                if(postJson["eventCode"] == "RL" and (row[3].strip() == "Vessel")):
                     postJson["eventCode"], postJson["eventName"] = ("VD", "Vessel Departure")
                 postJson["resolvedEventSource"] = "OOCL RPA"
                 postJson["codeType"] = "UNLOCODE"
