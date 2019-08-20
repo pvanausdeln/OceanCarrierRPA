@@ -142,8 +142,6 @@ def OOCLPost(container, path):
                 postJson["location"] = row[2].split("\n")[0]
                 postJson["city"] = postJson["location"].split(",")[0]
                 postJson["country"] = postJson["location"].split(",")[-1]
-                if(row[3].strip() == ""):
-                    continue
                 postJson["eventTime"] = datetime.datetime.strptime(row[4].rsplit(" ", 1)[0], '%d %b %Y, %H:%M').strftime('%m-%d-%Y %H:%M:%S')
                 postJson["vessel"] = row[7]
                 postJson["voyageNumber"] = row[8]
