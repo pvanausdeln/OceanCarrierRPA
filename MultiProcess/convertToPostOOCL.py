@@ -7,9 +7,10 @@ import datetime
 import glob
 import csv
 import string
+import pycountry
 
 class baseInfo:
-    postURL = "https://apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
+    postURL = "https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
 
     shipmentEventBase = {
     "associatedAssetSize": None,
@@ -141,7 +142,14 @@ def OOCLPost(container, path):
                 postJson["unitId"] = container
                 postJson["location"] = row[2].split("\n")[0]
                 postJson["city"] = postJson["location"].split(",")[0]
-                postJson["country"] = postJson["location"].split(",")[-1]
+                try:
+                    print(postJson["location"].split(",")[-1])
+                    if(postJson["location"].split(",")[-1] == "Taiwan"): # I hate geopolitics
+                        postJson["country"] = "TW"
+                    else:
+                        postJson["country"] = pycountry.countries.get(name=postJson["location"].split(",")[-1].strip()).alpha_2
+                except:
+                    pass
                 postJson["eventTime"] = datetime.datetime.strptime(row[4].rsplit(" ", 1)[0], '%d %b %Y, %H:%M').strftime('%m-%d-%Y %H:%M:%S')
                 postJson["vessel"] = row[7]
                 postJson["voyageNumber"] = row[8]
