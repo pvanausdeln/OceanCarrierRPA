@@ -82,6 +82,7 @@ class baseInfo:
         "loaded on vessel": "AE",
         "Discharged": "UV",
         "Received": "CO",
+        "Pick-up by merchant haulage": "MH",
         "Empty container received": "EE",
         "Empty container returned": "RD",
         "Despatched by rail" : "RL",
@@ -129,12 +130,17 @@ def EvergreenPost(container, path):
             postJson["unitSize"] = data.get("Size/Type").split("'")[0]
             postJson["city"] = data.get("Location").split(" ")[0]
             postJson["eventTime"] = datetime.datetime.strptime(data.get("Date").title(), '%b-%d-%Y').strftime('%m-%d-%Y %H:%M:%S')
-            try:
-                print(data.get("Vessel Voyage").rsplit(' ', 1)[0])
-                postJson["vessel"] = data.get("Vessel Voyage").rsplit(' ', 1)[0]
-                postJson["voyageNumber"] = data.get("Vessel Voyage").rsplit(' ', 1)[1]
-            except:
-                return
+##            try:
+##                print(data.get("Vessel Voyage").rsplit(' ', 1)[0])
+##                postJson["vessel"] = data.get("Vessel Voyage").rsplit(' ', 1)[0]
+##                postJson["voyageNumber"] = data.get("Vessel Voyage").rsplit(' ', 1)[1]
+##            except:
+##                return container
+            
+            postJson["vessel"] = data.get("Vessel")
+            postJson["voyageNumber"] = data.get("Vessel")
+                
+                
             postJson["eventCode"], postJson["eventName"] = EvergreenEventTranslate(data.get("Container Moves"))
             postJson["resolvedEventSource"] = "Evergreen RPA"
             postJson["codeType"] = "UNLOCODE"
@@ -142,6 +148,9 @@ def EvergreenPost(container, path):
             print(json.dumps(postJson))
             if(postJson["eventCode"] == None):
                 return
+##            with open(path+"result\\"+container+".json", 'w') as f:
+##                json.dump(postJson, f)
+                
             headers = {'content-type':'application/json'}
             r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
             print(r)
@@ -159,8 +168,8 @@ def main(containerList, cwd):
         path+=x+"\\\\"
     containerList = list(set(containerList))
     for container in containerList:
-        EvergreenPost(container, path)
-
+        x=EvergreenPost(container, path)
+    
 if __name__ == "__main__":
     #testMain(sys.argv[1])
     main(sys.argv[1], sys.argv[2])
