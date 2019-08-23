@@ -103,6 +103,7 @@ def OOCLPost(container, path):
         with open(path+"ContainerInformation\\"+container+".csv") as containerInfo:
             reader = csv.reader(containerInfo)
             next(reader)
+
             for row in reader:
                 postJson = copy.deepcopy(baseInfo.shipmentEventBase)
                 postJson["unitId"] = container
@@ -132,9 +133,12 @@ def OOCLPost(container, path):
                 postJson["reportSource"] = "Ocean Carrier"
                 if(postJson["eventCode"] == None):
                     continue
-                if(datetime.datetime.strptime(postJson["eventTime"], '%Y-%m-%d %H:%M:%S') > datetime.datetime.now()):
-                    postJson["estimatedEvent"] = True
+                # if(datetime.datetime.strptime(postJson["eventTime"], '%Y-%m-%d %H:%M:%S') > datetime.datetime.now()):
+                #     postJson["estimatedEvent"] = True
+                if(row[9].strip()=="Estimated"):
+                    postJson["estimatedEvent"]=True
                 print(json.dumps(postJson))
+
                 producer = kafka.KafkaProducer(bootstrap_servers=['10.138.0.2:9092'],
                                     value_serializer=lambda x: json.dumps(x).encode('utf-8'),
                                     linger_ms = 10)
