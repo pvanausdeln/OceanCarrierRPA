@@ -103,6 +103,8 @@ def CMACGMPost(container, path):
                     continue
                 if(datetime.datetime.strptime(postJson["eventTime"], '%Y-%m-%d %H:%M:%S') > datetime.datetime.now()):
                     postJson["estimatedEvent"] = True
+                if(row[7].strip()=="True"):
+                    postJson["estimatedEvent"] = True
                 print(json.dumps(postJson))
                 producer = kafka.KafkaProducer(bootstrap_servers=['10.138.0.2:9092'],
                                     value_serializer=lambda x: json.dumps(x).encode('utf-8'),
