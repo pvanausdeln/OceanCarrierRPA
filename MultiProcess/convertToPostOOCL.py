@@ -8,70 +8,36 @@ import glob
 import csv
 import string
 import pycountry
+import kafka
 
 class baseInfo:
     postURL = "https://test-apps.blumesolutions.com/shipmentservice-api/v1/bv/shipmentevents"
 
     shipmentEventBase = {
-    "associatedAssetSize": None,
-    "associatedUnitId": None,
-    "billOfLadingNumber": None,
-    "bookingNumber": None,
-    "bookingOffice": None,
-    "carrierCode": None,
-    "carrierName": None,
-    "city": None,
-    "codeType": None,
-    "consigneeName": None,
-    "containerBookingNumber": None,
-    "country": None,
-    "createdBy": None,
-    "customerOrderReferenceNumber": None,
-    "destinationCity": None,
-    "destinationSPLC": None,
-    "destinationState": None,
-    "eventCode": None,
-    "eventName": None,
-    "eventTime": None,
-    "houseBill": None,
-    "importReferenceNumber": None,
-    "latitude": 0,
-    "location": None,
-    "longitude": 0,
-    "masterBill": None,
-    "notes": None,
-    "onHandNumber": None,
-    "originSPLC": None,
-    "originatorCode": None,
-    "originatorId": 0,
-    "originatorName": None,
-    "postalCode": None,
-    "purchaseOrderReferenceNumber": None,
-    "railBillingNumber": None,
-    "reasonCode": None,
-    "reasonName": None,
-    "receiverCode": None,
-    "receiverName": None,
-    "reportSource": None,
-    "reportedBy": None,
-    "resolvedEventId": 0,
-    "resolvedEventOriginalId": 0,
-    "resolvedEventSource": None,
-    "resolvedEventStatus": None,
-    "sealNumber": None,
-    "shipmentReferenceNumber": None,
-    "signedBy": None,
-    "state": None,
-    "stopType": None,
-    "terminalCode": None,
-    "terminalFunction": None,
-    "unitId": None,
-    "unitSize": 0,
-    "unitState": None,
-    "unitTypeCode": None,
-    "vessel": None,
-    "voyageNumber": None,
-    "workOrderNumber": None
+        "billOfLadingNumber": None,
+        "bookingNumber": None,
+        "carrierCode": None,
+        "carrierName": None,
+        "city": None,
+        "codeType": None,
+        "country": None,
+        "estimatedEvent": False,
+        "eventCode": None,
+        "eventName": None,
+        "eventTime": None,
+        "estimatedEvent": False,
+        "location": None,
+        "reportSource": None,
+        "resolvedEventSource": None,
+        "shipmentReferenceNumber": None,
+        "state": None,
+        "terminalCode": None,
+        "unitId": None,
+        "unitSize": 0,
+        "unitTypeCode": None,
+        "vessel": None,
+        "voyageNumber": None,
+        "workOrderNumber": None
     }
 
     StatusMapOOCL = {
@@ -141,16 +107,15 @@ def OOCLPost(container, path):
                 postJson = copy.deepcopy(baseInfo.shipmentEventBase)
                 postJson["unitId"] = container
                 postJson["location"] = row[2].split("\n")[0]
-                postJson["city"] = postJson["location"].split(",")[0]
+                postJson["city"] = postJson["location"].split(",")[1].strip()
                 try:
-                    print(postJson["location"].split(",")[-1])
                     if(postJson["location"].split(",")[-1] == "Taiwan"): # I hate geopolitics
                         postJson["country"] = "TW"
                     else:
                         postJson["country"] = pycountry.countries.get(name=postJson["location"].split(",")[-1].strip()).alpha_2
                 except:
                     pass
-                postJson["eventTime"] = datetime.datetime.strptime(row[4].rsplit(" ", 1)[0], '%d %b %Y, %H:%M').strftime('%m-%d-%Y %H:%M:%S')
+                postJson["eventTime"] = datetime.datetime.strptime(row[4].rsplit(" ", 1)[0], '%d %b %Y, %H:%M').strftime('%Y-%m-%d %H:%M:%S')
                 postJson["vessel"] = row[7]
                 postJson["voyageNumber"] = row[8]
                 postJson["eventCode"], postJson["eventName"] = OOCLEventTranslate(row[0])
@@ -164,13 +129,17 @@ def OOCLPost(container, path):
                     postJson["eventCode"], postJson["eventName"] = ("VD", "Vessel Departure")
                 postJson["resolvedEventSource"] = "OOCL RPA"
                 postJson["codeType"] = "UNLOCODE"
-                postJson["reportSource"] = "OceanEvent"
-                print(json.dumps(postJson))
+                postJson["reportSource"] = "Ocean Carrier"
                 if(postJson["eventCode"] == None):
                     continue
-                headers = {'content-type':'application/json'}
-                r = requests.post(baseInfo.postURL, data = json.dumps(postJson), headers = headers, verify = False)
-                print(r)
+                if(datetime.datetime.strptime(postJson["eventTime"], '%Y-%m-%d %H:%M:%S') > datetime.datetime.now()):
+                    postJson["estimatedEvent"] = True
+                print(json.dumps(postJson))
+                producer = kafka.KafkaProducer(bootstrap_servers=['10.138.0.2:9092'],
+                                    value_serializer=lambda x: json.dumps(x).encode('utf-8'),
+                                    linger_ms = 10)
+                producer.send('RAW_EVENT_RPA_OCEANCARIER_QA', value=postJson)
+                producer.flush()
     return
 
 def testMain(container):
