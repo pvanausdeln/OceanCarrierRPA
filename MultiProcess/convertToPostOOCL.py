@@ -133,8 +133,8 @@ def OOCLPost(container, path):
                 postJson["reportSource"] = "Ocean Carrier"
                 if(postJson["eventCode"] == None):
                     continue
-                # if(datetime.datetime.strptime(postJson["eventTime"], '%Y-%m-%d %H:%M:%S') > datetime.datetime.now()):
-                #     postJson["estimatedEvent"] = True
+                if(datetime.datetime.strptime(postJson["eventTime"], '%Y-%m-%d %H:%M:%S') > datetime.datetime.now()):
+                    postJson["estimatedEvent"] = True
                 if(row[9].strip()=="Estimated"):
                     postJson["estimatedEvent"]=True
                 print(json.dumps(postJson))
